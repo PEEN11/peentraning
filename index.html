@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>P1EN HUB</title>
+    <style>
+        *{margin:0;padding:0;box-sizing:border-box}
+        body{font-family:'Segoe UI',system-ui,sans-serif;background:#08080f;color:#fff;min-height:100vh;display:flex;justify-content:center;align-items:center;padding:30px}
+        .app{width:100%;max-width:650px}
+
+        .auth-card{background:rgba(255,255,255,0.03);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:50px 40px;text-align:center}
+        .auth-logo{font-size:40px;font-weight:200;letter-spacing:12px;color:#fff}
+        .auth-logo b{font-weight:600;color:#aaa}
+        .auth-sub{font-size:11px;letter-spacing:6px;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:25px}
+        .auth-input{width:100%;padding:14px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;color:#fff;font-size:16px;text-align:center;outline:none;margin-bottom:12px}
+        .auth-input:focus{border-color:rgba(255,255,255,0.2)}
+        .auth-btn{width:100%;padding:14px;background:rgba(255,255,255,0.06);border:1px solid rgba(255,255,255,0.1);border-radius:14px;color:#fff;font-size:15px;cursor:pointer;margin-bottom:8px;transition:all 0.2s}
+        .auth-btn:hover{background:rgba(255,255,255,0.1)}
+        .auth-btn.admin-btn{border-color:rgba(255,107,53,0.3);color:#ff6b35;background:rgba(255,107,53,0.05)}
+        .auth-btn.admin-btn:hover{background:rgba(255,107,53,0.15)}
+        .auth-link{font-size:12px;color:rgba(255,255,255,0.2);cursor:pointer;background:none;border:none;display:block;margin:10px auto 0}
+        .auth-link:hover{color:#fff}
+        .auth-error{color:#f55;font-size:12px;margin-top:10px;display:none}
+
+        .main-screen{display:none}
+        .top-bar{display:flex;align-items:center;gap:10px;padding:10px 0;margin-bottom:10px}
+        .back-btn{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:12px;display:none}
+        .back-btn:hover{background:rgba(255,255,255,0.06)}
+        .refresh-top{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);color:#fff;padding:8px 14px;border-radius:8px;cursor:pointer;font-size:12px;margin-left:auto}
+        .refresh-top:hover{background:rgba(255,255,255,0.06)}
+
+        .page{display:none}
+        .page.active{display:block}
+
+        .header{display:flex;justify-content:space-between;align-items:center;padding:20px 0 10px}
+        .logo{font-size:38px;font-weight:200;letter-spacing:10px}
+        .logo b{font-weight:600;color:#aaa}
+        .subtitle{font-size:10px;letter-spacing:5px;color:rgba(255,255,255,0.3);margin-top:4px}
+        .user-row{display:flex;align-items:center;gap:8px;font-size:13px;color:rgba(255,255,255,0.4)}
+        .user-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,0.3)}
+        .user-dot.admin-dot{background:#ff6b35}
+        .user-name{color:#fff;font-weight:500}
+        .admin-badge{font-size:9px;padding:2px 6px;border-radius:8px;background:rgba(255,107,53,0.15);color:#ff6b35;border:1px solid rgba(255,107,53,0.3)}
+        .logout-link{color:rgba(255,255,255,0.2);cursor:pointer;background:none;border:none;font-size:12px}
+        .logout-link:hover{color:#f55}
+
+        .admin-panel{background:rgba(255,107,53,0.03);border:1px solid rgba(255,107,53,0.2);border-radius:16px;padding:18px;margin-bottom:15px}
+        .admin-title{font-size:11px;text-transform:uppercase;letter-spacing:3px;color:#ff6b35;margin-bottom:12px}
+        .admin-actions{display:flex;gap:8px;flex-wrap:wrap}
+        .admin-btn-action{padding:8px 14px;border:1px solid rgba(255,107,53,0.2);border-radius:10px;font-size:11px;cursor:pointer;background:rgba(255,107,53,0.05);color:#ff6b35}
+        .admin-btn-action:hover{background:rgba(255,107,53,0.15)}
+        .admin-btn-action.danger{border-color:rgba(255,80,80,0.2);color:#f55;background:rgba(255,80,80,0.05)}
+        .admin-btn-action.danger:hover{background:rgba(255,80,80,0.15)}
+        .admin-btn-action.invite{border-color:rgba(100,200,255,0.3);color:#6cf;background:rgba(100,200,255,0.05)}
+        .admin-btn-action.invite:hover{background:rgba(100,200,255,0.15)}
+        .admin-info{font-size:10px;color:rgba(255,107,53,0.4);margin-top:10px}
+
+        /* СТРАНИЦА ПРИГЛАШЕНИЙ */
+        .invite-page{display:none}
+        .invite-page.active{display:block}
+        .invite-card{background:rgba(255,255,255,0.015);border:1px solid rgba(100,200,255,0.15);border-radius:16px;padding:25px;margin-bottom:15px}
+        .invite-title{font-size:14px;color:#6cf;margin-bottom:20px;letter-spacing:1px}
+        .invite-input{width:100%;padding:12px;background:rgba(255,255,255,0.02);border:1px solid rgba(100,200,255,0.2);border-radius:10px;color:#fff;font-size:14px;text-align:center;outline:none;margin-bottom:12px}
+        .invite-input:focus{border-color:rgba(100,200,255,0.5)}
+        .invite-btn{width:100%;padding:12px;background:rgba(100,200,255,0.1);border:1px solid rgba(100,200,255,0.3);border-radius:10px;color:#6cf;font-size:14px;cursor:pointer}
+        .invite-btn:hover{background:rgba(100,200,255,0.2)}
+        .invite-list{display:flex;flex-direction:column;gap:8px;margin-top:15px}
+        .invite-item{display:flex;justify-content:space-between;align-items:center;padding:10px 14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.04);border-radius:10px;font-size:13px}
+        .invite-status{font-size:10px;padding:3px 8px;border-radius:8px}
+        .invite-status.pending{background:rgba(255,200,50,0.1);color:#fc3;border:1px solid rgba(255,200,50,0.2)}
+        .invite-status.accepted{background:rgba(100,200,100,0.1);color:#6c6;border:1px solid rgba(100,200,100,0.2)}
+        .invite-remove{color:rgba(255,80,80,0.4);cursor:pointer;background:none;border:none;font-size:16px}
+        .invite-remove:hover{color:#f55}
+        .no-invites{text-align:center;color:rgba(255,255,255,0.2);font-size:12px;padding:15px}
+
+        .matches-block{background:rgba(255,255,255,0.015);backdrop-filter:blur(15px);border:1px solid rgba(255,107,53,0.1);border-radius:16px;padding:18px;margin-bottom:15px}
+        .matches-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+        .matches-label{font-size:11px;text-transform:uppercase;letter-spacing:3px;color:rgba(255,255,255,0.3)}
+        .filters-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:12px}
+        .filter-btn{padding:5px 10px;border:1px solid rgba(255,255,255,0.08);border-radius:15px;font-size:10px;cursor:pointer;background:transparent;color:rgba(255,255,255,0.4)}
+        .filter-btn.active{background:rgba(255,255,255,0.06);color:#fff;border-color:rgba(255,255,255,0.2)}
+        .match-item{display:flex;align-items:center;gap:12px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,0.03);cursor:pointer}
+        .match-item:last-child{border-bottom:none}
+        .match-time{font-size:12px;color:rgba(255,255,255,0.4);min-width:50px}
+        .match-teams{flex:1;font-size:13px}
+        .match-teams .v{color:#fff;font-weight:500}
+        .match-teams .d{color:rgba(255,255,255,0.4)}
+        .match-stars{display:flex;gap:1px}.star{color:rgba(255,200,50,0.2);font-size:11px}.star.on{color:#fc3}
+        .match-event{font-size:9px;color:rgba(255,255,255,0.2)}
+        .no-matches{font-size:12px;color:rgba(255,255,255,0.2);text-align:center;padding:15px}
+
+        .search-box{position:relative;margin-bottom:15px}
+        .search-box span{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:rgba(255,255,255,0.2)}
+        .search-box input{width:100%;padding:14px 16px 14px 42px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.05);border-radius:14px;color:#fff;font-size:14px;outline:none}
+        .btn-row{display:flex;gap:10px;justify-content:center;margin-bottom:15px}
+        .btn{padding:12px 22px;border:1px solid rgba(255,255,255,0.08);border-radius:12px;cursor:pointer;font-size:13px;background:rgba(255,255,255,0.02);color:#fff}
+        .btn:hover{background:rgba(255,255,255,0.06)}
+        .btn-primary{background:rgba(255,255,255,0.06)}.btn-primary:hover{background:rgba(255,255,255,0.1)}
+        .btn-danger{color:#f55;border-color:rgba(255,80,80,0.15)}.btn-danger:hover{background:rgba(255,80,80,0.06)}
+        .btn-green{color:#6c6;border-color:rgba(100,200,100,0.15)}.btn-green:hover{background:rgba(100,200,100,0.06)}
+        .trainings-list{display:flex;flex-direction:column;gap:10px}
+        .training-card{background:rgba(255,255,255,0.015);backdrop-filter:blur(15px);border:1px solid rgba(255,255,255,0.04);border-radius:16px;padding:18px 22px;cursor:pointer;transition:all 0.2s}
+        .training-card:hover{background:rgba(255,255,255,0.03);transform:translateY(-1px)}
+        .card-top{display:flex;justify-content:space-between;margin-bottom:10px}
+        .card-name{font-size:16px;font-weight:500}
+        .card-tag{font-size:10px;padding:4px 10px;border-radius:20px;border:1px solid}
+        .tag-aim{border-color:rgba(255,255,255,0.2);color:rgba(255,255,255,0.5)}
+        .tag-movement{border-color:rgba(150,180,255,0.2);color:rgba(150,180,255,0.5)}
+        .tag-grenades{border-color:rgba(150,255,180,0.2);color:rgba(150,255,180,0.5)}
+        .tag-tactics{border-color:rgba(220,180,255,0.2);color:rgba(220,180,255,0.5)}
+        .card-meta{display:flex;gap:15px;font-size:12px;color:rgba(255,255,255,0.3);margin-bottom:5px}
+        .card-author{font-size:10px;color:rgba(255,255,255,0.12);text-align:right}
+        .empty-card{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);border-radius:20px;padding:50px;text-align:center}
+        .empty-icon{font-size:36px;opacity:0.3;margin-bottom:12px}
+        .empty-title{font-size:15px;color:rgba(255,255,255,0.35)}.empty-desc{font-size:12px;color:rgba(255,255,255,0.15);margin-top:4px}
+
+        .modal-overlay{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.6);backdrop-filter:blur(8px);justify-content:center;align-items:center;z-index:100;padding:20px}
+        .modal{background:rgba(20,20,28,0.95);backdrop-filter:blur(30px);border:1px solid rgba(255,255,255,0.06);border-radius:24px;padding:30px;width:100%;max-width:480px;max-height:85vh;overflow-y:auto}
+        .modal h3{font-size:20px;font-weight:400;margin-bottom:22px}
+        .form-group{margin-bottom:18px}
+        .form-group label{display:block;font-size:10px;text-transform:uppercase;letter-spacing:2px;color:rgba(255,255,255,0.3);margin-bottom:6px}
+        .form-group input,.form-group select,.form-group textarea{width:100%;padding:11px 14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;color:#fff;font-size:14px;outline:none;font-family:inherit}
+        .form-group textarea{resize:vertical;min-height:70px}
+        .form-group select option{background:#1a1a22;color:#fff}
+        .radio-row{display:flex;gap:8px}.radio-row label{flex:1;text-align:center}.radio-row input{display:none}
+        .radio-row span{display:block;padding:10px;border:1px solid rgba(255,255,255,0.06);border-radius:8px;cursor:pointer;font-size:12px;color:rgba(255,255,255,0.35)}
+        .radio-row input:checked+span{border-color:#fff;color:#fff}
+        .modal-actions{display:flex;justify-content:flex-end;gap:10px;margin-top:25px}
+        .code-block{background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:18px;text-align:center;font-size:12px;color:rgba(255,255,255,0.5);word-break:break-all;cursor:pointer;margin:15px 0;font-family:monospace}
+        .detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}
+        .detail-item{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);border-radius:10px;padding:14px}
+        .detail-item .lbl{font-size:9px;text-transform:uppercase;letter-spacing:1.5px;color:rgba(255,255,255,0.25);margin-bottom:4px}.detail-item .val{font-size:14px}
+        .detail-author{display:flex;align-items:center;gap:8px;margin-top:14px;padding:12px;background:rgba(255,255,255,0.015);border-radius:10px}
+        .detail-author .av{width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,0.1);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600}
+        .instr-box{background:rgba(255,255,255,0.015);border:1px solid rgba(255,255,255,0.04);border-radius:10px;padding:16px;white-space:pre-line;line-height:1.7;color:rgba(255,255,255,0.5);font-size:13px;margin-top:18px}
+        .success-msg{background:rgba(100,200,100,0.06);border:1px solid rgba(100,200,100,0.12);border-radius:10px;padding:12px;text-align:center;color:#6c6;margin-bottom:15px;display:none}
+        ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-thumb{background:rgba(255,255,255,0.06);border-radius:2px}
+    </style>
+</head>
+<body>
+<div class="app">
+    <!-- АВТОРИЗАЦИЯ -->
+    <div class="auth-card" id="loginScreen">
+        <div class="auth-logo">P<b>1</b>EN HUB</div>
+        <div class="auth-sub">вход</div>
+        <input class="auth-input" id="loginNick" placeholder="никнейм" maxlength="20" autocomplete="off">
+        <input class="auth-input" id="loginPass" type="password" placeholder="пароль" autocomplete="off">
+        <div class="auth-error" id="loginError">неверный ник или пароль</div>
+        <button class="auth-btn" onclick="doLogin()">войти</button>
+        <button class="auth-link" onclick="showRegister()">нет аккаунта? создать</button>
+        <button class="auth-btn admin-btn" onclick="showAdminLogin()" style="margin-top:15px">🔑 вход для админа</button>
+    </div>
+    <div class="auth-card" id="registerScreen" style="display:none">
+        <div class="auth-logo">P<b>1</b>EN HUB</div>
+        <div class="auth-sub">регистрация</div>
+        <input class="auth-input" id="regNick" placeholder="придумайте никнейм" maxlength="20" autocomplete="off">
+        <input class="auth-input" id="regPass" type="password" placeholder="придумайте пароль" autocomplete="off">
+        <input class="auth-input" id="regPass2" type="password" placeholder="повторите пароль" autocomplete="off">
+        <div class="auth-error" id="regError">ошибка регистрации</div>
+        <button class="auth-btn" onclick="doRegister()">создать аккаунт</button>
+        <button class="auth-link" onclick="showLogin()">← уже есть аккаунт? войти</button>
+    </div>
+    <div class="auth-card" id="adminLoginScreen" style="display:none">
+        <div class="auth-logo">P<b>1</b>EN HUB</div>
+        <div class="auth-sub" style="color:#ff6b35">админ-панель</div>
+        <input class="auth-input" id="adminLoginInput" placeholder="логин" autocomplete="off">
+        <input class="auth-input" id="adminPassInput" type="password" placeholder="пароль" autocomplete="off">
+        <div class="auth-error" id="adminError">неверный логин или пароль</div>
+        <button class="auth-btn admin-btn" onclick="doAdminLogin()">войти как админ</button>
+        <button class="auth-link" onclick="showLogin()">← назад</button>
+    </div>
+
+    <!-- ОСНОВНОЙ ЭКРАН -->
+    <div class="main-screen" id="appScreen">
+        <div class="top-bar">
+            <button class="back-btn" id="backBtn" onclick="goBack()">← назад</button>
+            <button class="refresh-top" onclick="refreshAll()">🔄 обновить</button>
+        </div>
+
+        <!-- ГЛАВНАЯ СТРАНИЦА -->
+        <div class="page active" id="mainPage">
+            <div class="header">
+                <div><div class="logo">P<b>1</b>EN HUB</div><div class="subtitle">система тренировок</div></div>
+                <div class="user-row">
+                    <span class="user-dot" id="userDot"></span>
+                    <span class="user-name" id="userNameDisplay"></span>
+                    <span class="admin-badge" id="adminBadge" style="display:none">ADMIN</span>
+                    <button class="logout-link" onclick="logout()">выход</button>
+                </div>
+            </div>
+            <div class="admin-panel" id="adminPanel">
+                <div class="admin-title">🛡️ Админ-панель</div>
+                <div class="admin-actions">
+                    <button class="admin-btn-action invite" onclick="openInvitePage()">👥 Приглашения в команду</button>
+                    <button class="admin-btn-action" onclick="adminBroadcast()">📢 Сообщение всем</button>
+                    <button class="admin-btn-action" onclick="adminAddGlobal()">➕ Глобальная тренировка</button>
+                    <button class="admin-btn-action danger" onclick="adminReset()">⚠️ Сброс данных</button>
+                </div>
+                <div class="admin-info">Пользователей: <span id="adminUserCount">0</span> | Тренировок: <span id="adminTrainCount">0</span> | Приглашений: <span id="adminInviteCount">0</span></div>
+            </div>
+            <div class="matches-block">
+                <div class="matches-top"><span class="matches-label">🎮 Матчи CS2</span></div>
+                <div class="filters-row">
+                    <button class="filter-btn active" onclick="filterMatches('all',this)">Все</button>
+                    <button class="filter-btn" onclick="filterMatches('live',this)">🔴 Live</button>
+                    <button class="filter-btn" onclick="filterMatches('top',this)">⭐ Топ</button>
+                </div>
+                <div id="matchesContent"><div class="no-matches">загрузка...</div></div>
+            </div>
+            <div class="search-box"><span>⌕</span><input type="text" id="search" placeholder="поиск тренировок..." oninput="showList()"></div>
+            <div class="btn-row"><button class="btn btn-primary" onclick="openForm()">+ новая тренировка</button><button class="btn" onclick="openCodeModal()">импорт кода</button></div>
+            <div class="trainings-list" id="list"></div>
+            <div class="empty-card" id="empty"><div class="empty-icon">○</div><div class="empty-title">нет тренировок</div><div class="empty-desc">создайте или импортируйте</div></div>
+        </div>
+
+        <!-- СТРАНИЦА ПРИГЛАШЕНИЙ -->
+        <div class="page" id="invitePage">
+            <div class="invite-card">
+                <div class="invite-title">👥 Пригласить игрока в команду</div>
+                <input class="invite-input" id="inviteNickInput" placeholder="никнейм игрока" maxlength="20" autocomplete="off">
+                <button class="invite-btn" onclick="sendInvite()">📨 Отправить приглашение</button>
+            </div>
+            <div class="invite-card">
+                <div class="invite-title">📋 Список приглашений</div>
+                <div class="invite-list" id="inviteList">
+                    <div class="no-invites">нет приглашений</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- МОДАЛКИ -->
+<div class="modal-overlay" id="detailModal"><div class="modal">
+    <div style="display:flex;justify-content:space-between;margin-bottom:15px"><span class="card-tag" id="detailBadge"></span><button class="btn" onclick="closeDetail()" style="padding:6px 10px">✕</button></div>
+    <h3 id="detailName"></h3><div class="detail-author"><div class="av" id="detailAuthorAvatar"></div><div><span style="color:rgba(255,255,255,0.3);font-size:11px">автор</span><br><span id="detailAuthor"></span></div></div>
+    <div class="detail-grid"><div class="detail-item"><div class="lbl">карта</div><div class="val" id="detailMap"></div></div><div class="detail-item"><div class="lbl">длит</div><div class="val" id="detailDuration"></div></div><div class="detail-item"><div class="lbl">сложн</div><div class="val" id="detailDifficulty"></div></div><div class="detail-item"><div class="lbl">катег</div><div class="val" id="detailCategory"></div></div></div>
+    <div style="margin-top:18px" id="detailDescSection"><div class="lbl">описание</div><div class="val" id="detailDesc"></div></div>
+    <div style="margin-top:18px" id="detailInstrSection"><div class="lbl">инструкция</div><div class="instr-box" id="detailInstr"></div></div>
+    <div class="modal-actions"><button class="btn btn-green" onclick="shareTraining()">поделиться</button><button class="btn btn-danger" onclick="deleteTraining()">удалить</button><button class="btn" onclick="editTraining()">изменить</button></div>
+</div></div>
+<div class="modal-overlay" id="formModal"><div class="modal">
+    <h3 id="modalTitle">новая тренировка</h3><input type="hidden" id="editId">
+    <div class="form-group"><label>название</label><input id="trainName"></div>
+    <div class="form-group"><label>категория</label><select id="trainCat"><option value="aim">аим</option><option value="movement">движение</option><option value="grenades">гранаты</option><option value="tactics">тактика</option></select></div>
+    <div class="form-group"><label>карта</label><select id="trainMap"><option value="">нет</option><option>Mirage</option><option>Inferno</option><option>Nuke</option><option>Overpass</option><option>Vertigo</option><option>Ancient</option><option>Anubis</option><option>Aim Map</option></select></div>
+    <div class="form-group"><label>длит (мин)</label><input type="number" id="trainDur" value="15" min="1"></div>
+    <div class="form-group"><label>сложность</label><div class="radio-row"><label><input type="radio" name="diff" value="easy"><span>легкая</span></label><label><input type="radio" name="diff" value="medium" checked><span>средняя</span></label><label><input type="radio" name="diff" value="hard"><span>сложная</span></label></div></div>
+    <div class="form-group"><label>описание</label><textarea id="trainDesc" rows="2"></textarea></div>
+    <div class="form-group"><label>инструкция</label><textarea id="trainInstr" rows="3"></textarea></div>
+    <div class="modal-actions"><button class="btn" onclick="closeForm()">отмена</button><button class="btn btn-primary" onclick="saveTraining()">сохранить</button></div>
+</div></div>
+<div class="modal-overlay" id="shareModal"><div class="modal" style="max-width:500px;text-align:center"><h3>код</h3><div class="code-block" id="shareCode" onclick="copyCode()"></div><div class="modal-actions" style="justify-content:center"><button class="btn btn-primary" onclick="copyCode()">копировать</button><button class="btn" onclick="closeShare()">закрыть</button></div></div></div>
+<div class="modal-overlay" id="codeModal"><div class="modal" style="max-width:500px;text-align:center"><h3>импорт</h3><textarea id="codeInput" style="width:100%;padding:14px;background:rgba(255,255,255,0.02);border:1px solid rgba(255,255,255,0.06);border-radius:10px;color:#fff;font-size:13px;min-height:100px;text-align:center;font-family:monospace;outline:none"></textarea><div class="success-msg" id="successMsg">успешно!</div><div class="modal-actions" style="justify-content:center"><button class="btn btn-primary" onclick="addByCode()">импорт</button><button class="btn" onclick="closeCodeModal()">отмена</button></div></div></div>
+<div class="modal-overlay" id="deleteModal"><div class="modal" style="max-width:360px;text-align:center"><h3>удалить?</h3><p style="color:#f55" id="deleteNameText"></p><div class="modal-actions" style="justify-content:center"><button class="btn" onclick="closeDelete()">отмена</button><button class="btn btn-danger" onclick="confirmDelete()">удалить</button></div></div></div>
+
+<script>
+var trainings=[],deleteId=null,shareCode='',currentUser='',detailId=null,allMatches=[],currentFilter='all',isAdmin=false,invites=[];
+var catNames={aim:'аим',movement:'движение',grenades:'гранаты',tactics:'тактика'};
+var diffNames={easy:'легкая',medium:'средняя',hard:'сложная'};
+var badges={aim:'tag-aim',movement:'tag-movement',grenades:'tag-grenades',tactics:'tag-tactics'};
+var ADMIN_LOGIN='p1en0101',ADMIN_PASS='nep1en112201';
+var currentPage='main';
+
+function getUsers(){var d=localStorage.getItem('p1enhub_users');return d?JSON.parse(d):{}}
+function saveUsers(u){localStorage.setItem('p1enhub_users',JSON.stringify(u))}
+function getInvites(){var d=localStorage.getItem('p1enhub_invites');return d?JSON.parse(d):[]}
+function saveInvites(i){localStorage.setItem('p1enhub_invites',JSON.stringify(i))}
+
+function showRegister(){document.getElementById('loginScreen').style.display='none';document.getElementById('registerScreen').style.display='block';document.getElementById('adminLoginScreen').style.display='none'}
+function showLogin(){document.getElementById('registerScreen').style.display='none';document.getElementById('adminLoginScreen').style.display='none';document.getElementById('loginScreen').style.display='block'}
+function showAdminLogin(){document.getElementById('loginScreen').style.display='none';document.getElementById('registerScreen').style.display='none';document.getElementById('adminLoginScreen').style.display='block'}
+
+function doRegister(){
+    var n=document.getElementById('regNick').value.trim();var p=document.getElementById('regPass').value.trim();var p2=document.getElementById('regPass2').value.trim();
+    document.getElementById('regError').style.display='none';
+    if(!n||n.length<2){document.getElementById('regError').textContent='Никнейм от 2 символов';document.getElementById('regError').style.display='block';return}
+    if(!p||p.length<3){document.getElementById('regError').textContent='Пароль от 3 символов';document.getElementById('regError').style.display='block';return}
+    if(p!==p2){document.getElementById('regError').textContent='Пароли не совпадают';document.getElementById('regError').style.display='block';return}
+    var users=getUsers();if(users[n]){document.getElementById('regError').textContent='Никнейм занят';document.getElementById('regError').style.display='block';return}
+    if(n===ADMIN_LOGIN){document.getElementById('regError').textContent='Зарезервировано';document.getElementById('regError').style.display='block';return}
+    users[n]=p;saveUsers(users);alert('Аккаунт создан!');showLogin();document.getElementById('loginNick').value=n;
+}
+function doLogin(){
+    var n=document.getElementById('loginNick').value.trim();var p=document.getElementById('loginPass').value.trim();
+    document.getElementById('loginError').style.display='none';
+    if(!n||!p){document.getElementById('loginError').textContent='Заполните поля';document.getElementById('loginError').style.display='block';return}
+    var users=getUsers();if(!users[n]||users[n]!==p){document.getElementById('loginError').textContent='Неверный ник или пароль';document.getElementById('loginError').style.display='block';return}
+    enterApp(n,false);
+}
+function doAdminLogin(){
+    var l=document.getElementById('adminLoginInput').value.trim();var p=document.getElementById('adminPassInput').value.trim();
+    document.getElementById('adminError').style.display='none';
+    if(l===ADMIN_LOGIN&&p===ADMIN_PASS)enterApp('ADMIN',true);
+    else document.getElementById('adminError').style.display='block';
+}
+function enterApp(name,admin){
+    currentUser=name;isAdmin=admin;localStorage.setItem('p1enhub_user',name);
+    if(admin)localStorage.setItem('p1enhub_admin','true');else localStorage.removeItem('p1enhub_admin');
+    document.getElementById('loginScreen').style.display='none';document.getElementById('registerScreen').style.display='none';document.getElementById('adminLoginScreen').style.display='none';
+    document.getElementById('appScreen').style.display='block';document.getElementById('userNameDisplay').textContent=name;
+    if(admin){document.getElementById('adminBadge').style.display='inline-block';document.getElementById('adminPanel').style.display='block';document.getElementById('userDot').className='user-dot admin-dot'}
+    else{document.getElementById('adminBadge').style.display='none';document.getElementById('adminPanel').style.display='none';document.getElementById('userDot').className='user-dot'}
+    loadData();loadMatches();loadInvites();updateAdminInfo();showPage('main');
+}
+function logout(){currentUser='';isAdmin=false;localStorage.removeItem('p1enhub_user');localStorage.removeItem('p1enhub_admin');document.getElementById('appScreen').style.display='none';document.getElementById('loginScreen').style.display='block'}
+
+// ===== НАВИГАЦИЯ =====
+function showPage(page){
+    currentPage=page;
+    document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+    document.getElementById(page+'Page').classList.add('active');
+    document.getElementById('backBtn').style.display=page==='main'?'none':'inline-block';
+    if(page==='invite')renderInvites();
+}
+function goBack(){showPage('main')}
+function refreshAll(){
+    if(currentPage==='main'){loadMatches();showList();if(isAdmin)updateAdminInfo()}
+    if(currentPage==='invite'){loadInvites();renderInvites()}
+}
+function openInvitePage(){showPage('invite')}
+
+// ===== ПРИГЛАШЕНИЯ =====
+function loadInvites(){invites=getInvites();updateAdminInfo()}
+function sendInvite(){
+    var nick=document.getElementById('inviteNickInput').value.trim();
+    if(!nick){alert('Введите никнейм');return}
+    var users=getUsers();
+    if(!users[nick]&&nick!==ADMIN_LOGIN){alert('Пользователь не найден');return}
+    if(nick===currentUser){alert('Нельзя пригласить себя');return}
+    for(var i=0;i<invites.length;i++){if(invites[i].nick===nick&&invites[i].status==='pending'){alert('Приглашение уже отправлено');return}}
+    invites.unshift({nick:nick,status:'pending',date:new Date().toLocaleDateString()});
+    saveInvites(invites);document.getElementById('inviteNickInput').value='';renderInvites();updateAdminInfo();alert('Приглашение отправлено!')
+}
+function removeInvite(index){invites.splice(index,1);saveInvites(invites);renderInvites();updateAdminInfo()}
+function renderInvites(){
+    var c=document.getElementById('inviteList');
+    if(invites.length===0){c.innerHTML='<div class="no-invites">нет приглашений</div>';return}
+    var h='';invites.forEach(function(inv,i){
+        h+='<div class="invite-item"><span>'+inv.nick+' <span class="invite-status '+inv.status+'">'+inv.status+'</span></span><span style="color:rgba(255,255,255,0.2);font-size:10px">'+inv.date+'</span><button class="invite-remove" onclick="removeInvite('+i+')">×</button></div>';
+    });c.innerHTML=h;
+}
+
+// ===== АДМИН =====
+function updateAdminInfo(){
+    var users=getUsers();var inv=getInvites();
+    document.getElementById('adminUserCount').textContent=Object.keys(users).length;
+    document.getElementById('adminTrainCount').textContent=trainings.length;
+    document.getElementById('adminInviteCount').textContent=inv.length;
+}
+function adminBroadcast(){var m=prompt('Сообщение:');if(m){localStorage.setItem('p1enhub_broadcast',m);alert('Отправлено!')}}
+function adminAddGlobal(){trainings.unshift({id:Date.now(),name:'🌟 Глобальная тренировка',category:'aim',map:'Aim Map',duration:20,difficulty:'medium',description:'Официальная тренировка P1EN HUB',instructions:'Следуйте инструкциям',author:'ADMIN',global:true});saveData();showList();updateAdminInfo();alert('Добавлено!')}
+function adminReset(){if(confirm('Удалить ВСЕ тренировки?')){trainings=[];saveData();showList();updateAdminInfo()}}
+
+// ===== МАТЧИ =====
+function loadMatches(){
+    var now=new Date();var h=now.getUTCHours()+3;
+    allMatches=[{time:(h+1)+':00 МСК',team1:'Vitality',team2:'FaZe',stars:5,event:'ESL Pro League',live:true},{time:(h+2)+':30 МСК',team1:'NAVI',team2:'G2',stars:5,event:'BLAST Premier',live:false},{time:(h+3)+':00 МСК',team1:'Spirit',team2:'MOUZ',stars:4,event:'IEM Cologne',live:false},{time:'Завтра 12:00',team1:'Astralis',team2:'VP',stars:4,event:'PGL Major',live:false},{time:'Завтра 18:00',team1:'fnatic',team2:'NiP',stars:3,event:'ESL Pro League',live:false}];
+    renderMatches();
+}
+function renderMatches(){
+    var c=document.getElementById('matchesContent');var f=allMatches;
+    if(currentFilter==='live')f=f.filter(function(m){return m.live});if(currentFilter==='top')f=f.filter(function(m){return m.stars>=4});
+    if(f.length===0){c.innerHTML='<div class="no-matches">нет матчей</div>';return}
+    var h='';f.forEach(function(m){var s='';for(var i=1;i<=5;i++)s+='<span class="star'+(i<=m.stars?' on':'')+'">★</span>';
+        h+='<div class="match-item" onclick="window.open(\'https://hltv.org/matches\',\'_blank\')"><div class="match-time">'+(m.live?'🔴 ':'')+m.time+'</div><div class="match-teams"><span class="v">'+m.team1+'</span> vs <span class="d">'+m.team2+'</span><br><span class="match-event">'+m.event+'</span></div><div class="match-stars">'+s+'</div></div>'});c.innerHTML=h;
+}
+function filterMatches(f,btn){currentFilter=f;document.querySelectorAll('.filter-btn').forEach(function(b){b.classList.remove('active')});btn.classList.add('active');renderMatches()}
+
+// ===== КОДЫ =====
+function encode(td){var d={n:td.name,c:td.category,m:td.map,d:td.duration,f:td.difficulty,e:td.description,i:td.instructions,a:td.author||currentUser};return'P1EN:'+btoa(unescape(encodeURIComponent(JSON.stringify(d))))}
+function decode(s){try{s=s.trim();if(s.indexOf('P1EN:')!==0)return null;s=s.replace('P1EN:','');var d=JSON.parse(decodeURIComponent(escape(atob(s))));d.id=Date.now();return d}catch(e){return null}}
+
+// ===== ДАННЫЕ =====
+function loadData(){var s=localStorage.getItem('p1enhub_data');if(s){trainings=JSON.parse(s)}else{trainings=[{id:1,name:'Разминка AK-47',category:'aim',map:'Aim Map',duration:15,difficulty:'medium',description:'Базовая',instructions:'1. Map\n2. AK\n3. 100',author:'p1en'},{id:2,name:'Гранаты Mirage',category:'grenades',map:'Mirage',duration:30,difficulty:'hard',description:'Гранаты',instructions:'1. Smoke\n2. Molly',author:'p1en'},{id:3,name:'Растяжка Nuke',category:'movement',map:'Nuke',duration:20,difficulty:'easy',description:'Движение',instructions:'1. Rails',author:'p1en'}];saveData()}showList()}
+function saveData(){localStorage.setItem('p1enhub_data',JSON.stringify(trainings))}
+function showList(){
+    var l=document.getElementById('list'),e=document.getElementById('empty'),s=document.getElementById('search').value.toLowerCase();
+    var f=trainings;if(s)f=trainings.filter(function(t){return t.name.toLowerCase().indexOf(s)!==-1});
+    if(f.length===0){l.innerHTML='';e.style.display='block';return}
+    e.style.display='none';l.innerHTML='';
+    f.forEach(function(t){var d=document.createElement('div');d.className='training-card';
+        d.innerHTML='<div class="card-top"><div class="card-name">'+t.name+'</div><div class="card-tag '+(badges[t.category]||'')+'">'+(catNames[t.category]||'')+'</div></div><div class="card-meta"><span>'+(t.map||'—')+'</span><span>·</span><span>'+t.duration+'м</span><span>·</span><span>'+(diffNames[t.difficulty]||'')+'</span></div><div class="card-author">'+(t.author||'')+'</div>';
+        d.onclick=function(){openDetail(t.id)};l.appendChild(d)});
+    if(isAdmin)updateAdminInfo();
+}
+function openDetail(id){
+    var t=null;for(var i=0;i<trainings.length;i++){if(trainings[i].id===id){t=trainings[i];break}}
+    if(!t)return;detailId=id;shareCode=encode(t);
+    document.getElementById('detailName').textContent=t.name;document.getElementById('detailBadge').textContent=catNames[t.category]||'';document.getElementById('detailBadge').className='card-tag '+(badges[t.category]||'');
+    document.getElementById('detailMap').textContent=t.map||'—';document.getElementById('detailDuration').textContent=t.duration+' мин';
+    document.getElementById('detailDifficulty').textContent=diffNames[t.difficulty]||'';document.getElementById('detailCategory').textContent=catNames[t.category]||'';
+    document.getElementById('detailDesc').textContent=t.description||'—';document.getElementById('detailInstr').textContent=t.instructions||'—';
+    document.getElementById('detailAuthor').textContent=t.author||'?';document.getElementById('detailAuthorAvatar').textContent=(t.author||'?')[0].toUpperCase();
+    document.getElementById('detailModal').style.display='flex';
+}
+function closeDetail(){document.getElementById('detailModal').style.display='none'}
+function shareTraining(){closeDetail();document.getElementById('shareCode').textContent=shareCode;document.getElementById('shareModal').style.display='flex'}
+function closeShare(){document.getElementById('shareModal').style.display='none'}
+function copyCode(){navigator.clipboard.writeText(shareCode).then(function(){alert('Скопировано!')}).catch(function(){})}
+function deleteTraining(){closeDetail();showDelete(detailId)}
+function editTraining(){closeDetail();editTrain(detailId)}
+function openForm(td){
+    if(td){document.getElementById('modalTitle').textContent='ред.';document.getElementById('editId').value=td.id;document.getElementById('trainName').value=td.name;document.getElementById('trainCat').value=td.category;document.getElementById('trainMap').value=td.map||'';document.getElementById('trainDur').value=td.duration;document.getElementById('trainDesc').value=td.description||'';document.getElementById('trainInstr').value=td.instructions||'';var r=document.getElementsByName('diff');for(var i=0;i<r.length;i++){if(r[i].value===td.difficulty)r[i].checked=true}}
+    else{document.getElementById('modalTitle').textContent='новая';document.getElementById('editId').value='';document.getElementById('trainName').value='';document.getElementById('trainCat').value='aim';document.getElementById('trainMap').value='';document.getElementById('trainDur').value='15';document.getElementById('trainDesc').value='';document.getElementById('trainInstr').value='';document.getElementsByName('diff')[1].checked=true}
+    document.getElementById('formModal').style.display='flex';
+}
+function saveTraining(){
+    var id=document.getElementById('editId').value;var d={name:document.getElementById('trainName').value.trim(),category:document.getElementById('trainCat').value,map:document.getElementById('trainMap').value,duration:parseInt(document.getElementById('trainDur').value),difficulty:document.querySelector('input[name="diff"]:checked').value,description:document.getElementById('trainDesc').value.trim(),instructions:document.getElementById('trainInstr').value.trim()};
+    if(!d.name){alert('Введите название');return}
+    if(id){for(var i=0;i<trainings.length;i++){if(trainings[i].id===parseInt(id)){d.id=trainings[i].id;d.author=trainings[i].author;trainings[i]=d;break}}}
+    else{d.id=Date.now();d.author=isAdmin?'ADMIN':currentUser;trainings.unshift(d)}saveData();closeForm();showList();
+}
+function editTrain(id){for(var i=0;i<trainings.length;i++){if(trainings[i].id===id){openForm(trainings[i]);break}}}
+function closeForm(){document.getElementById('formModal').style.display='none'}
+function showDelete(id){deleteId=id;for(var i=0;i<trainings.length;i++){if(trainings[i].id===id){document.getElementById('deleteNameText').textContent=trainings[i].name;break}}document.getElementById('deleteModal').style.display='flex'}
+function confirmDelete(){if(deleteId){var a=[];for(var i=0;i<trainings.length;i++){if(trainings[i].id!==deleteId)a.push(trainings[i])}trainings=a;saveData();showList()}closeDelete()}
+function closeDelete(){document.getElementById('deleteModal').style.display='none'}
+function openCodeModal(){document.getElementById('codeInput').value='';document.getElementById('successMsg').style.display='none';document.getElementById('codeModal').style.display='flex'}
+function closeCodeModal(){document.getElementById('codeModal').style.display='none'}
+function addByCode(){var c=document.getElementById('codeInput').value.trim();if(!c){alert('Вставьте код');return}var t=decode(c);if(!t){alert('Неверный код');return}trainings.unshift(t);saveData();showList();document.getElementById('successMsg').style.display='block';document.getElementById('codeInput').value='';setTimeout(function(){document.getElementById('successMsg').style.display='none'},3000)}
+document.onkeydown=function(e){if(e.key==='Escape'){closeForm();closeDelete();closeDetail();closeShare();closeCodeModal()}};
+
+(function(){var u=localStorage.getItem('p1enhub_user');var a=localStorage.getItem('p1enhub_admin');if(u){if(a==='true'){isAdmin=true;enterApp('ADMIN',true)}else{var users=getUsers();if(users[u]){enterApp(u,false)}}}})();
+</script>
+</body>
+</html>
