@@ -1,0 +1,1034 @@
+                  <!DOCTYPE html>
+                  <html lang="ru">
+                  <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>P1EN HUB — CS2 Training</title>
+                    <link rel="preconnect" href="https://fonts.googleapis.com">
+                    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+                    <style>
+                      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+                      :root {
+                        --bg: #050505;
+                        --glass: rgba(255,255,255,0.05);
+                        --glass-hover: rgba(255,255,255,0.09);
+                        --border: rgba(255,255,255,0.1);
+                        --border-light: rgba(255,255,255,0.2);
+                        --text: #f0f0f0;
+                        --muted: #777;
+                        --white: #fff;
+                        --blur: 28px;
+                        --radius: 22px;
+                        --radius-sm: 12px;
+                        --shadow: 0 8px 40px rgba(0,0,0,0.5);
+                      }
+
+                      html { color-scheme: dark; }
+
+                      body {
+                        font-family: 'Inter', 'Segoe UI', sans-serif;
+                        background: var(--bg);
+                        color: var(--text);
+                        min-height: 100vh;
+                        line-height: 1.5;
+                      }
+
+                      body::before {
+                        content: '';
+                        position: fixed;
+                        inset: 0;
+                        background:
+                          radial-gradient(ellipse 70% 50% at 15% 0%, rgba(255,255,255,0.06), transparent 60%),
+                          radial-gradient(ellipse 50% 40% at 90% 90%, rgba(255,255,255,0.04), transparent 55%),
+                          linear-gradient(180deg, #0a0a0a, #050505);
+                        z-index: -1;
+                      }
+
+                      .orb {
+                        position: fixed;
+                        border-radius: 50%;
+                        filter: blur(80px);
+                        pointer-events: none;
+                        z-index: -1;
+                      }
+                      .orb-1 { width: 350px; height: 350px; background: rgba(255,255,255,0.03); top: -80px; right: -60px; animation: drift 14s ease-in-out infinite; }
+                      .orb-2 { width: 250px; height: 250px; background: rgba(255,255,255,0.02); bottom: 10%; left: -40px; animation: drift 18s ease-in-out infinite reverse; }
+
+                      @keyframes drift {
+                        0%, 100% { transform: translate(0,0); }
+                        50% { transform: translate(25px, 35px); }
+                      }
+
+                      @keyframes fadeUp {
+                        from { opacity: 0; transform: translateY(14px); }
+                        to { opacity: 1; transform: translateY(0); }
+                      }
+
+                      .wrap { max-width: 680px; margin: 0 auto; padding: 24px 16px 60px; }
+
+                      .screen { display: none; animation: fadeUp 0.4s ease; }
+                      .screen.on { display: block; }
+
+                      /* ── Glass panel ── */
+                      .panel {
+                        background: var(--glass);
+                        backdrop-filter: blur(var(--blur)) saturate(160%);
+                        -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius);
+                        box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.07);
+                        padding: 32px 26px;
+                        position: relative;
+                        overflow: hidden;
+                      }
+                      .panel::after {
+                        content: '';
+                        position: absolute;
+                        top: 0; left: 10%; right: 10%;
+                        height: 1px;
+                        background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+                      }
+
+                      .logo { font-size: 1.9rem; font-weight: 700; text-align: center; letter-spacing: -0.5px; }
+                      .logo .p, .logo .en { color: var(--white); }
+                      .logo .one { color: var(--muted); }
+                      .sub { text-align: center; color: var(--muted); font-size: 0.85rem; margin: 6px 0 28px; letter-spacing: 0.1em; text-transform: lowercase; }
+                      .sub.admin { text-transform: uppercase; font-size: 0.72rem; color: var(--white); letter-spacing: 0.18em; }
+
+                      /* ── Forms ── */
+                      .field { margin-bottom: 14px; }
+                      .field label {
+                        display: block; font-size: 0.72rem; font-weight: 500;
+                        color: var(--muted); margin-bottom: 5px;
+                        text-transform: uppercase; letter-spacing: 0.08em;
+                      }
+                      input, select, textarea {
+                        width: 100%; padding: 11px 14px;
+                        background: rgba(255,255,255,0.03);
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius-sm);
+                        color: var(--text); font: inherit; font-size: 0.93rem;
+                        transition: 0.25s;
+                      }
+                      input::placeholder, textarea::placeholder { color: #444; }
+                      select option { background: #111; }
+                      input:focus, select:focus, textarea:focus {
+                        outline: none;
+                        border-color: var(--border-light);
+                        background: rgba(255,255,255,0.06);
+                        box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+                      }
+                      textarea { resize: vertical; min-height: 76px; }
+
+                      /* ── Buttons ── */
+                      .btn {
+                        display: inline-flex; align-items: center; justify-content: center;
+                        gap: 6px; padding: 11px 18px;
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius-sm);
+                        background: rgba(255,255,255,0.06);
+                        color: var(--white); font: inherit; font-size: 0.9rem; font-weight: 600;
+                        cursor: pointer; transition: 0.25s; width: 100%;
+                        backdrop-filter: blur(8px);
+                      }
+                      .btn:hover { background: rgba(255,255,255,0.12); border-color: var(--border-light); transform: translateY(-1px); }
+                      .btn-ghost { background: transparent; color: var(--muted); }
+                      .btn-ghost:hover { color: var(--white); }
+                      .btn-outline { background: transparent; border-color: var(--border-light); color: var(--muted); margin-top: 10px; }
+                      .btn-outline:hover { color: var(--white); background: rgba(255,255,255,0.04); }
+                      .btn-sm { padding: 7px 13px; font-size: 0.82rem; width: auto; }
+                      .btn-danger { color: #999; background: rgba(255,255,255,0.03); }
+                      .btn-danger:hover { color: var(--white); background: rgba(255,255,255,0.08); }
+                      .btn-w100 { width: 100%; margin-top: 12px; }
+
+                      .err {
+                        display: none; padding: 10px 14px; margin-bottom: 14px;
+                        background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+                        border-radius: var(--radius-sm); color: #aaa; font-size: 0.84rem;
+                      }
+                      .err.on { display: block; }
+
+                      .link { text-align: center; margin-top: 18px; font-size: 0.88rem; color: var(--muted); }
+                      .link a { color: var(--white); cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.25); text-decoration: none; }
+
+                      /* ── Header ── */
+                      .top {
+                        display: flex; align-items: center; justify-content: space-between;
+                        flex-wrap: wrap; gap: 10px;
+                        padding: 14px 18px; margin-bottom: 18px;
+                        background: var(--glass);
+                        backdrop-filter: blur(var(--blur));
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius);
+                        box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.05);
+                      }
+                      .top .logo { font-size: 1.3rem; text-align: left; }
+                      .user { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; }
+                      .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--white); box-shadow: 0 0 8px rgba(255,255,255,0.5); }
+                      .badge {
+                        font-size: 0.6rem; font-weight: 700; padding: 2px 7px;
+                        border: 1px solid var(--border-light); border-radius: 5px;
+                        background: rgba(255,255,255,0.1); letter-spacing: 0.06em;
+                      }
+                      .logout { background: none; border: none; color: var(--muted); cursor: pointer; font-size: 0.82rem; }
+                      .logout:hover { color: var(--white); }
+
+                      /* ── Tabs ── */
+                      .tabs {
+                        display: flex; gap: 3px; padding: 3px; margin-bottom: 18px;
+                        background: rgba(255,255,255,0.03);
+                        border: 1px solid var(--border); border-radius: var(--radius-sm);
+                        backdrop-filter: blur(12px);
+                      }
+                      .tab {
+                        flex: 1; padding: 9px 6px; border: none; border-radius: 9px;
+                        background: transparent; color: var(--muted);
+                        font: inherit; font-size: 0.82rem; font-weight: 500; cursor: pointer; transition: 0.25s;
+                      }
+                      .tab:hover { color: var(--text); }
+                      .tab.on {
+                        background: rgba(255,255,255,0.09); color: var(--white); font-weight: 600;
+                        border: 1px solid var(--border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+                      }
+                      .page { display: none; animation: fadeUp 0.3s ease; }
+                      .page.on { display: block; }
+
+                      /* ── Admin bar ── */
+                      .admin-bar {
+                        display: none; align-items: center; justify-content: space-between;
+                        padding: 11px 15px; margin-bottom: 14px;
+                        background: rgba(255,255,255,0.04);
+                        border: 1px solid var(--border-light);
+                        border-radius: var(--radius-sm);
+                        backdrop-filter: blur(12px);
+                      }
+                      .admin-bar.on { display: flex; }
+                      .admin-bar span { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; }
+
+                      /* ── Toolbar ── */
+                      .bar { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+                      .search { flex: 1; min-width: 160px; position: relative; }
+                      .search svg { position: absolute; left: 11px; top: 50%; transform: translateY(-50%); color: var(--muted); pointer-events: none; }
+                      .search input { padding-left: 36px; }
+
+                      /* ── Cards ── */
+                      .list { display: flex; flex-direction: column; gap: 10px; }
+                      .card {
+                        padding: 16px 18px; cursor: pointer;
+                        background: var(--glass);
+                        backdrop-filter: blur(20px) saturate(150%);
+                        border: 1px solid var(--border);
+                        border-radius: var(--radius);
+                        box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+                        transition: 0.3s;
+                      }
+                      .card:hover {
+                        background: var(--glass-hover);
+                        border-color: var(--border-light);
+                        transform: translateY(-2px);
+                        box-shadow: 0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
+                      }
+                      .card h3 { font-size: 1rem; margin-bottom: 8px; color: var(--white); }
+                      .meta { display: flex; flex-wrap: wrap; gap: 7px; align-items: center; font-size: 0.8rem; color: var(--muted); }
+                      .tag {
+                        padding: 2px 9px; border-radius: 20px; font-size: 0.72rem; font-weight: 600;
+                        border: 1px solid var(--border); background: rgba(255,255,255,0.06);
+                        text-transform: capitalize; color: #ccc;
+                      }
+
+                      .empty { text-align: center; padding: 44px 20px; color: var(--muted);
+                        background: var(--glass); border: 1px solid var(--border); border-radius: var(--radius); }
+                      .empty svg { opacity: 0.2; margin-bottom: 12px; }
+
+                      /* ── Rows ── */
+                      .row {
+                        display: flex; align-items: center; gap: 12px;
+                        padding: 13px 15px; margin-bottom: 8px;
+                        background: var(--glass); backdrop-filter: blur(16px);
+                        border: 1px solid var(--border); border-radius: var(--radius-sm);
+                        transition: 0.25s;
+                      }
+                      .row:hover { border-color: var(--border-light); }
+                      .ava {
+                        width: 40px; height: 40px; border-radius: 50%;
+                        display: flex; align-items: center; justify-content: center;
+                        font-weight: 700; font-size: 0.95rem; color: #111;
+                        border: 1px solid rgba(255,255,255,0.2);
+                        flex-shrink: 0;
+                      }
+                      .row-info { flex: 1; }
+                      .row-info .n { font-weight: 600; font-size: 0.93rem; color: var(--white); }
+                      .row-info .r { font-size: 0.8rem; color: var(--muted); }
+                      .pill {
+                        font-size: 0.75rem; padding: 3px 9px; border-radius: 20px;
+                        border: 1px solid var(--border);
+                      }
+                      .pill-on { background: rgba(255,255,255,0.08); color: var(--white); }
+                      .pill-off { background: rgba(255,255,255,0.02); color: #555; }
+                      .rank {
+                        width: 30px; height: 30px; border-radius: 50%;
+                        display: flex; align-items: center; justify-content: center;
+                        font-weight: 700; font-size: 0.82rem;
+                        border: 1px solid var(--border); background: rgba(255,255,255,0.04);
+                        color: var(--muted); flex-shrink: 0;
+                      }
+                      .rank-1 { background: rgba(255,255,255,0.18); color: var(--white); border-color: rgba(255,255,255,0.35); box-shadow: 0 0 14px rgba(255,255,255,0.1); }
+                      .rank-2 { background: rgba(255,255,255,0.1); color: #ddd; border-color: rgba(255,255,255,0.22); }
+                      .rank-3 { background: rgba(255,255,255,0.06); color: #aaa; }
+                      .score { font-weight: 700; color: var(--white); }
+
+                      /* ── Notifications ── */
+                      .invite-box {
+                        padding: 18px; margin-bottom: 16px;
+                        background: rgba(255,255,255,0.04);
+                        border: 1px solid var(--border-light);
+                        border-radius: var(--radius);
+                        backdrop-filter: blur(12px);
+                      }
+                      .invite-box h4 { font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 10px; color: var(--white); }
+                      .invite-box .flex { display: flex; gap: 8px; }
+                      .notif {
+                        padding: 13px 15px; margin-bottom: 7px;
+                        background: var(--glass); border: 1px solid var(--border);
+                        border-left: 2px solid rgba(255,255,255,0.35);
+                        border-radius: var(--radius-sm); font-size: 0.88rem;
+                        backdrop-filter: blur(10px);
+                      }
+                      .notif.bc { border-left-color: var(--white); }
+                      .notif .t { font-size: 0.72rem; color: var(--muted); margin-top: 3px; }
+
+                      /* ── Modal ── */
+                      .overlay {
+                        display: none; position: fixed; inset: 0;
+                        background: rgba(0,0,0,0.8);
+                        backdrop-filter: blur(14px);
+                        z-index: 900; align-items: center; justify-content: center; padding: 16px;
+                      }
+                      .overlay.on { display: flex; animation: fadeUp 0.2s ease; }
+                      .modal {
+                        width: 100%; max-width: 500px; max-height: 90vh; overflow-y: auto;
+                        padding: 26px 22px;
+                        background: rgba(18,18,18,0.9);
+                        backdrop-filter: blur(var(--blur)) saturate(170%);
+                        border: 1px solid var(--border-light);
+                        border-radius: var(--radius);
+                        box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.07);
+                        animation: fadeUp 0.35s ease;
+                      }
+                      .modal-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 18px; }
+                      .modal-head h2 { font-size: 1.15rem; color: var(--white); }
+                      .x {
+                        background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+                        color: var(--muted); font-size: 1.1rem; cursor: pointer;
+                        padding: 3px 10px; border-radius: 7px; line-height: 1;
+                      }
+                      .x:hover { color: var(--white); background: rgba(255,255,255,0.1); }
+
+                      .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+                      .grid .full { grid-column: 1 / -1; }
+                      .grid label { display: block; font-size: 0.68rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; margin-bottom: 3px; }
+                      .grid span { font-size: 0.93rem; }
+
+                      .author {
+                        display: flex; align-items: center; gap: 10px;
+                        padding: 12px; margin-bottom: 14px;
+                        background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+                        border-radius: var(--radius-sm);
+                      }
+                      .author .ava { width: 34px; height: 34px; font-size: 0.85rem; }
+                      .box {
+                        padding: 14px; margin-bottom: 16px;
+                        background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+                        border-radius: var(--radius-sm); font-size: 0.88rem;
+                        color: #bbb; white-space: pre-wrap; line-height: 1.6;
+                      }
+                      .actions { display: flex; gap: 8px; flex-wrap: wrap; }
+                      .actions .btn { flex: 1; min-width: 90px; }
+
+                      .radios { display: flex; gap: 12px; flex-wrap: wrap; }
+                      .radios label { display: flex; align-items: center; gap: 5px; font-size: 0.88rem; cursor: pointer; color: var(--text); text-transform: none; letter-spacing: 0; }
+                      .radios input { width: auto; accent-color: var(--white); }
+
+                      .code-box {
+                        padding: 11px; margin-bottom: 14px;
+                        background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+                        border-radius: var(--radius-sm);
+                        font-family: monospace; font-size: 0.72rem;
+                        word-break: break-all; max-height: 110px; overflow-y: auto; color: #888;
+                      }
+                      .hint { font-size: 0.86rem; color: var(--muted); margin-bottom: 10px; }
+
+                      /* ── Toast ── */
+                      .toast {
+                        position: fixed; bottom: 22px; left: 50%;
+                        transform: translateX(-50%) translateY(70px);
+                        padding: 11px 22px;
+                        background: rgba(255,255,255,0.08);
+                        backdrop-filter: blur(20px);
+                        border: 1px solid var(--border-light);
+                        border-radius: var(--radius-sm);
+                        color: var(--white); font-size: 0.88rem; font-weight: 500;
+                        z-index: 999; transition: 0.35s; box-shadow: var(--shadow);
+                      }
+                      .toast.on { transform: translateX(-50%) translateY(0); }
+
+                      @media (max-width: 480px) {
+                        .panel { padding: 22px 18px; }
+                        .grid { grid-template-columns: 1fr; }
+                        .bar, .invite-box .flex, .actions { flex-direction: column; }
+                        .actions .btn, .btn-sm { width: 100%; }
+                      }
+                    </style>
+                  </head>
+                  <body>
+
+                  <div class="orb orb-1"></div>
+                  <div class="orb orb-2"></div>
+
+                  <div class="wrap">
+
+                    <!-- LOGIN -->
+                    <div id="s-login" class="screen on">
+                      <div class="panel">
+                        <div class="logo"><span class="p">P</span><span class="one">1</span><span class="en">EN HUB</span></div>
+                        <p class="sub">training system</p>
+                        <div id="e-login" class="err"></div>
+                        <form id="f-login">
+                          <div class="field"><label>Nickname</label><input id="i-login-nick" placeholder="Your nickname" autocomplete="username"></div>
+                          <div class="field"><label>Password</label><input id="i-login-pass" type="password" placeholder="Your password" autocomplete="current-password"></div>
+                          <button type="submit" class="btn">Sign In</button>
+                        </form>
+                        <button class="btn btn-outline" id="b-admin-go">Admin Panel</button>
+                        <p class="link">No account? <a id="b-reg-go">Create account</a></p>
+                      </div>
+                    </div>
+
+                    <!-- REGISTER -->
+                    <div id="s-reg" class="screen">
+                      <div class="panel">
+                        <div class="logo"><span class="p">P</span><span class="one">1</span><span class="en">EN HUB</span></div>
+                        <p class="sub">create account</p>
+                        <div id="e-reg" class="err"></div>
+                        <form id="f-reg">
+                          <div class="field"><label>Nickname</label><input id="i-reg-nick" placeholder="Choose nickname" autocomplete="username"></div>
+                          <div class="field"><label>Password</label><input id="i-reg-pass" type="password" placeholder="Min 6 characters" autocomplete="new-password"></div>
+                          <div class="field"><label>Confirm</label><input id="i-reg-pass2" type="password" placeholder="Repeat password" autocomplete="new-password"></div>
+                          <button type="submit" class="btn">Create Account</button>
+                        </form>
+                        <p class="link">Have account? <a id="b-login-go">Sign In</a></p>
+                      </div>
+                    </div>
+
+                    <!-- ADMIN LOGIN -->
+                    <div id="s-admin" class="screen">
+                      <div class="panel">
+                        <div class="logo"><span class="p">P</span><span class="one">1</span><span class="en">EN HUB</span></div>
+                        <p class="sub admin">Admin Access</p>
+                        <div id="e-admin" class="err"></div>
+                        <form id="f-admin">
+                          <div class="field"><label>Login</label><input id="i-admin-login" placeholder="Admin login"></div>
+                          <div class="field"><label>Password</label><input id="i-admin-pass" type="password" placeholder="Admin password"></div>
+                          <button type="submit" class="btn">Sign In as Admin</button>
+                        </form>
+                        <button class="btn btn-ghost btn-w100" id="b-admin-back">← Back</button>
+                      </div>
+                    </div>
+
+                    <!-- MAIN -->
+                    <div id="s-main" class="screen">
+                      <header class="top">
+                        <div class="logo"><span class="p">P</span><span class="one">1</span><span class="en">EN HUB</span></div>
+                        <div class="user">
+                          <span class="dot"></span>
+                          <span id="u-name"></span>
+                          <span id="u-badge" class="badge" style="display:none">ADMIN</span>
+                          <button class="logout" id="b-logout">Logout</button>
+                        </div>
+                      </header>
+
+                      <div id="admin-bar" class="admin-bar">
+                        <span>Admin Panel</span>
+                        <button class="btn btn-sm btn-outline" id="b-broadcast" style="margin:0">Broadcast</button>
+                      </div>
+
+                      <nav class="tabs">
+                        <button class="tab on" data-p="trainings">Trainings</button>
+                        <button class="tab" data-p="notifs">Notifs</button>
+                        <button class="tab" data-p="team">Team</button>
+                        <button class="tab" data-p="rating">Rating</button>
+                      </nav>
+
+                      <div id="p-trainings" class="page on">
+                        <div class="bar">
+                          <div class="search">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                            <input id="i-search" type="search" placeholder="Search...">
+                          </div>
+                          <button class="btn btn-sm" id="b-new">New Training</button>
+                          <button class="btn btn-sm btn-ghost" id="b-import-go">Import</button>
+                        </div>
+                        <div id="train-list" class="list"></div>
+                      </div>
+
+                      <div id="p-notifs" class="page">
+                        <div id="invite-wrap" style="display:none">
+                          <div class="invite-box">
+                            <h4>Send Invite</h4>
+                            <div class="flex">
+                              <input id="i-invite" placeholder="Player nickname">
+                              <button class="btn btn-sm" id="b-invite">Send</button>
+                            </div>
+                          </div>
+                        </div>
+                        <div id="notif-list"></div>
+                      </div>
+
+                      <div id="p-team" class="page"><div id="team-list"></div></div>
+                      <div id="p-rating" class="page"><div id="rating-list"></div></div>
+                    </div>
+                  </div>
+
+                  <!-- TRAINING FORM -->
+                  <div id="m-form" class="overlay">
+                    <div class="modal" onclick="event.stopPropagation()">
+                      <div class="modal-head"><h2 id="form-title">New Training</h2><button class="x" data-x="m-form">&times;</button></div>
+                      <form id="f-training">
+                        <input type="hidden" id="f-id">
+                        <div class="field"><label>Name</label><input id="f-name" required placeholder="Training name"></div>
+                        <div class="field"><label>Category</label>
+                          <select id="f-cat"><option value="aim">Aim</option><option value="movement">Movement</option><option value="grenades">Grenades</option><option value="tactics">Tactics</option></select>
+                        </div>
+                        <div class="field"><label>Map</label><select id="f-map"></select></div>
+                        <div class="field"><label>Duration (min)</label><input id="f-dur" type="number" min="1" max="999" required placeholder="30"></div>
+                        <div class="field"><label>Difficulty</label>
+                          <div class="radios">
+                            <label><input type="radio" name="f-diff" value="easy" checked> Easy</label>
+                            <label><input type="radio" name="f-diff" value="medium"> Medium</label>
+                            <label><input type="radio" name="f-diff" value="hard"> Hard</label>
+                          </div>
+                        </div>
+                        <div class="field"><label>Description</label><textarea id="f-desc" placeholder="Brief description"></textarea></div>
+                        <div class="field"><label>Instructions</label><textarea id="f-instr" placeholder="Step-by-step"></textarea></div>
+                        <button type="submit" class="btn" id="f-submit">Create Training</button>
+                      </form>
+                    </div>
+                  </div>
+
+                  <!-- DETAIL -->
+                  <div id="m-detail" class="overlay">
+                    <div class="modal" onclick="event.stopPropagation()">
+                      <div class="modal-head"><h2 id="d-name"></h2><button class="x" data-x="m-detail">&times;</button></div>
+                      <div id="d-body"></div>
+                      <div class="actions">
+                        <button class="btn btn-sm" id="b-share">Share</button>
+                        <button class="btn btn-sm btn-ghost" id="b-edit">Edit</button>
+                        <button class="btn btn-sm btn-danger" id="b-del">Delete</button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- SHARE -->
+                  <div id="m-share" class="overlay">
+                    <div class="modal" onclick="event.stopPropagation()">
+                      <div class="modal-head"><h2>Share Code</h2><button class="x" data-x="m-share">&times;</button></div>
+                      <p class="hint">Copy this code to share:</p>
+                      <div id="share-code" class="code-box"></div>
+                      <button class="btn" id="b-copy">Copy to Clipboard</button>
+                    </div>
+                  </div>
+
+                  <!-- IMPORT -->
+                  <div id="m-import" class="overlay">
+                    <div class="modal" onclick="event.stopPropagation()">
+                      <div class="modal-head"><h2>Import Training</h2><button class="x" data-x="m-import">&times;</button></div>
+                      <div class="field"><label>Training Code</label><textarea id="i-import" rows="4" placeholder="P1EN:..."></textarea></div>
+                      <div id="e-import" class="err"></div>
+                      <button class="btn" id="b-import">Import</button>
+                    </div>
+                  </div>
+
+                  <!-- BROADCAST -->
+                  <div id="m-bc" class="overlay">
+                    <div class="modal" onclick="event.stopPropagation()">
+                      <div class="modal-head"><h2>Broadcast</h2><button class="x" data-x="m-bc">&times;</button></div>
+                      <div class="field"><label>Message</label><textarea id="i-bc" rows="3" placeholder="Message for all users..."></textarea></div>
+                      <button class="btn" id="b-bc-send">Send Broadcast</button>
+                    </div>
+                  </div>
+
+                  <div id="toast" class="toast"></div>
+
+                  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+                  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+                  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+                  <script>
+                  /* ═══════════════════════════════════════════
+                    FIREBASE
+                    ═══════════════════════════════════════════ */
+                  const FB = {
+                    apiKey: "AIzaSyBB2lKiSSl8NxnFuSJLajS-unqhEIhJ5cI",
+                    authDomain: "p1enhub-583d7.firebaseapp.com",
+                    projectId: "p1enhub-583d7",
+                    storageBucket: "p1enhub-583d7.firebasestorage.app",
+                    messagingSenderId: "952052853903",
+                    appId: "1:952052853903:web:07de28301851f11df1d4fa"
+                  };
+
+                  const ADMIN = { login: 'p1en0101', pass: 'topp1en111', nick: 'p1en' };
+
+                  const MAPS = [
+                    'de_dust2','de_mirage','de_inferno','de_nuke','de_overpass',
+                    'de_vertigo','de_ancient','de_anubis','cs_office','cs_italy'
+                  ];
+
+                  const TEAM = [
+                    { name:'p1en', role:'Captain', on:true },
+                    { name:'player1', role:'AWPer', on:true },
+                    { name:'player2', role:'Rifler', on:false },
+                    { name:'player3', role:'Support', on:true },
+                    { name:'player4', role:'Entry', on:false }
+                  ];
+
+                  const RATING = [
+                    { name:'p1en', score:2450 },
+                    { name:'player1', score:2100 },
+                    { name:'player5', score:1850 },
+                    { name:'player3', score:1600 },
+                    { name:'player2', score:1400 }
+                  ];
+
+                  const AVA = ['#fff','#d4d4d4','#a3a3a3','#737373','#525252','#e5e5e5','#fafafa'];
+
+                  let auth, db, me = null, trains = [], curId = null;
+                  let unTr, unNo, unBc;
+
+                  /* ═══════════════════════════════════════════
+                    HELPERS
+                    ═══════════════════════════════════════════ */
+                  const $ = id => document.getElementById(id);
+                  const esc = s => { const d = document.createElement('div'); d.textContent = s; return d.innerHTML; };
+                  const nickEmail = n => n.toLowerCase().replace(/[^a-z0-9._-]/g,'') + '@p1enhub.app';
+                  const adminEmail = () => 'admin.' + ADMIN.login.toLowerCase() + '@p1enhub.app';
+                  const avaColor = n => { let h=0; for(let c of n) h=c.charCodeAt(0)+((h<<5)-h); return AVA[Math.abs(h)%AVA.length]; };
+                  const tag = c => `<span class="tag">${c}</span>`;
+                  const fmtTime = t => new Date(t).toLocaleDateString()+' '+new Date(t).toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+
+                  function toast(msg) {
+                    const t = $('toast'); t.textContent = msg; t.classList.add('on');
+                    setTimeout(() => t.classList.remove('on'), 2500);
+                  }
+
+                  function err(id, msg) { const e=$(id); e.textContent=msg; e.classList.add('on'); }
+                  function clrErr(id) { $(id).classList.remove('on'); }
+
+                  function screen(id) {
+                    document.querySelectorAll('.screen').forEach(s => s.classList.remove('on'));
+                    $(id).classList.add('on');
+                  }
+
+                  function modal(id) { $(id).classList.add('on'); }
+                  function closeModal(id) { $(id).classList.remove('on'); }
+                  function closeAll() { document.querySelectorAll('.overlay.on').forEach(m => m.classList.remove('on')); }
+
+                  function tab(name) {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('on', t.dataset.p === name));
+                    document.querySelectorAll('.page').forEach(p => p.classList.toggle('on', p.id === 'p-'+name));
+                  }
+
+                  function fbErr(e) {
+                    const m = {
+                      'auth/user-not-found':'Invalid nickname or password.',
+                      'auth/wrong-password':'Invalid nickname or password.',
+                      'auth/invalid-credential':'Invalid nickname or password.',
+                      'auth/email-already-in-use':'Nickname already taken.',
+                      'auth/weak-password':'Password must be at least 6 characters.',
+                      'auth/too-many-requests':'Too many attempts. Try later.'
+                    };
+                    return m[e.code] || e.message || 'Error';
+                  }
+
+                  /* ═══════════════════════════════════════════
+                    FIREBASE INIT
+                    ═══════════════════════════════════════════ */
+                  firebase.initializeApp(FB);
+                  auth = firebase.auth();
+                  db = firebase.firestore();
+
+                  async function profile(uid) {
+                    const d = await db.collection('users').doc(uid).get();
+                    return d.exists ? d.data() : null;
+                  }
+
+                  async function session(user) {
+                    const p = await profile(user.uid);
+                    return p ? { uid:user.uid, nick:p.nick, isAdmin:!!p.isAdmin } : null;
+                  }
+
+async function ensureAdmin(pass) {
+  const email = adminEmail();
+  try {
+    const c = await auth.signInWithEmailAndPassword(email, pass);
+    try {
+      await db.collection('users').doc(c.user.uid).set({ nick: ADMIN.nick, isAdmin: true }, { merge: true });
+    } catch (fe) { console.warn('Firestore user update:', fe); }
+    return;
+  } catch (e) {
+    const canRetry = ['auth/user-not-found', 'auth/invalid-credential', 'auth/wrong-password'];
+    if (!canRetry.includes(e.code)) throw e;
+    if (pass !== ADMIN.pass) throw { code: 'auth/wrong-password' };
+    try {
+      const c = await auth.createUserWithEmailAndPassword(email, pass);
+      await db.collection('users').doc(c.user.uid).set({ nick: ADMIN.nick, isAdmin: true, createdAt: Date.now() });
+      try {
+        await db.collection('nicknames').doc(ADMIN.nick.toLowerCase()).set({ uid: c.user.uid }, { merge: true });
+      } catch (ne) { console.warn('Nicknames doc:', ne); }
+    } catch (e2) {
+      if (e2.code === 'auth/email-already-in-use') throw { code: 'auth/wrong-password' };
+      throw e2;
+    }
+  }
+}
+
+function adminErr(e) {
+  const m = {
+    'auth/wrong-password': 'Неверный пароль.',
+    'auth/invalid-credential': 'Неверный пароль или аккаунт не найден.',
+    'auth/user-not-found': 'Аккаунт не найден.',
+    'auth/operation-not-allowed': 'В Firebase включи Email/Password (Authentication → Sign-in method).',
+    'auth/weak-password': 'Пароль слишком короткий.',
+    'auth/too-many-requests': 'Слишком много попыток. Подожди 5 минут.',
+    'auth/email-already-in-use': 'Удали пользователя admin.p1en0101@p1enhub.app в Firebase Console → Authentication.'
+  };
+  return m[e.code] || e.message || 'Ошибка входа. Открой консоль браузера (F12).';
+}
+
+                  /* ═══════════════════════════════════════════
+                    AUTH
+                    ═══════════════════════════════════════════ */
+                  async function doLogin(e) {
+                    e.preventDefault(); clrErr('e-login');
+                    const nick = $('i-login-nick').value.trim();
+                    const pass = $('i-login-pass').value;
+                    if (!nick || !pass) return err('e-login','Enter nickname and password.');
+                    try {
+                      const c = await auth.signInWithEmailAndPassword(nickEmail(nick), pass);
+                      me = await session(c.user);
+                      if (!me) { await auth.signOut(); return err('e-login','Profile not found.'); }
+                      enterMain();
+                    } catch(e) { err('e-login', fbErr(e)); }
+                  }
+
+                  async function doReg(e) {
+                    e.preventDefault(); clrErr('e-reg');
+                    const nick = $('i-reg-nick').value.trim();
+                    const pass = $('i-reg-pass').value;
+                    const pass2 = $('i-reg-pass2').value;
+                    if (!nick || !pass) return err('e-reg','Fill all fields.');
+                    if (pass.length < 6) return err('e-reg','Password min 6 characters.');
+                    if (pass !== pass2) return err('e-reg','Passwords do not match.');
+                    try {
+                      if ((await db.collection('nicknames').doc(nick.toLowerCase()).get()).exists)
+                        return err('e-reg','Nickname taken.');
+                      const c = await auth.createUserWithEmailAndPassword(nickEmail(nick), pass);
+                      await db.collection('users').doc(c.user.uid).set({ nick, isAdmin:false, createdAt:Date.now() });
+                      await db.collection('nicknames').doc(nick.toLowerCase()).set({ uid:c.user.uid });
+                      me = { uid:c.user.uid, nick, isAdmin:false };
+                      toast('Account created!');
+                      enterMain();
+                    } catch(e) { err('e-reg', fbErr(e)); }
+                  }
+
+async function doAdmin(e) {
+  e.preventDefault(); clrErr('e-admin');
+  const l = $('i-admin-login').value.trim();
+  const p = $('i-admin-pass').value;
+  if (!l || !p) return err('e-admin', 'Введите логин и пароль.');
+  if (l.toLowerCase() !== ADMIN.login.toLowerCase()) return err('e-admin', 'Неверный логин.');
+  try {
+    await ensureAdmin(p);
+    me = await session(auth.currentUser);
+    if (!me) me = { uid: auth.currentUser.uid, nick: ADMIN.nick, isAdmin: true };
+    me.isAdmin = true;
+    try {
+      await db.collection('users').doc(me.uid).set({ nick: ADMIN.nick, isAdmin: true }, { merge: true });
+    } catch (fe) { console.warn(fe); }
+    enterMain();
+    toast('Добро пожаловать, Admin!');
+  } catch(e) {
+    console.error('Admin login:', e);
+    err('e-admin', adminErr(e));
+  }
+}
+
+                  async function doLogout() {
+                    unsubAll();
+                    await auth.signOut();
+                    me = null; trains = [];
+                    screen('s-login');
+                    $('f-login').reset();
+                  }
+
+                  /* ═══════════════════════════════════════════
+                    MAIN
+                    ═══════════════════════════════════════════ */
+                  function enterMain() {
+                    screen('s-main');
+                    $('u-name').textContent = me.nick;
+                    $('u-badge').style.display = me.isAdmin ? 'inline' : 'none';
+                    $('admin-bar').classList.toggle('on', me.isAdmin);
+                    $('invite-wrap').style.display = me.isAdmin ? 'block' : 'none';
+                    listen();
+                    renderTeam();
+                    renderRating();
+                  }
+
+                  function unsubAll() {
+                    [unTr,unNo,unBc].forEach(u => u && u());
+                    unTr = unNo = unBc = null;
+                  }
+
+                  function listen() {
+                    unsubAll();
+                    unTr = db.collection('trainings').orderBy('createdAt','desc').onSnapshot(s => {
+                      trains = s.docs.map(d => ({ id:d.id, ...d.data() }));
+                      renderTrains($('i-search').value);
+                    });
+                    unNo = db.collection('notifications').orderBy('time','desc').onSnapshot(() => renderNotifs());
+                    unBc = db.collection('broadcasts').orderBy('time','desc').onSnapshot(() => renderNotifs());
+                  }
+
+                  /* ═══════════════════════════════════════════
+                    TRAININGS
+                    ═══════════════════════════════════════════ */
+                  function renderTrains(q='') {
+                    const el = $('train-list');
+                    let list = [...trains];
+                    if (q) {
+                      const s = q.toLowerCase();
+                      list = list.filter(t => [t.name,t.category,t.map,t.author].some(v => v.toLowerCase().includes(s)));
+                    }
+                    if (!list.length) {
+                      el.innerHTML = `<div class="empty"><svg width="56" height="56" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"/></svg><p>${q?'No results.':'No trainings yet.'}</p></div>`;
+                      return;
+                    }
+                    el.innerHTML = list.map(t => `
+                      <div class="card" data-id="${t.id}">
+                        <h3>${esc(t.name)}</h3>
+                        <div class="meta">${tag(t.category)} <span>🗺 ${esc(t.map)}</span> <span>⏱ ${t.duration}m</span> <span>📊 ${t.difficulty}</span> <span>👤 ${esc(t.author)}</span></div>
+                      </div>`).join('');
+                    el.querySelectorAll('.card').forEach(c => c.onclick = () => openDetail(c.dataset.id));
+                  }
+
+                  function openForm(t=null) {
+                    $('form-title').textContent = t ? 'Edit Training' : 'New Training';
+                    $('f-submit').textContent = t ? 'Save Changes' : 'Create Training';
+                    $('f-id').value = t?.id || '';
+                    $('f-name').value = t?.name || '';
+                    $('f-cat').value = t?.category || 'aim';
+                    $('f-map').value = t?.map || MAPS[0];
+                    $('f-dur').value = t?.duration || '';
+                    $('f-desc').value = t?.description || '';
+                    $('f-instr').value = t?.instructions || '';
+                    document.querySelectorAll('[name=f-diff]').forEach(r => r.checked = r.value === (t?.difficulty || 'easy'));
+                    modal('m-form');
+                  }
+
+                  async function saveTrain(e) {
+                    e.preventDefault();
+                    const id = $('f-id').value;
+                    const data = {
+                      name: $('f-name').value.trim(),
+                      category: $('f-cat').value,
+                      map: $('f-map').value,
+                      duration: parseInt($('f-dur').value, 10),
+                      difficulty: document.querySelector('[name=f-diff]:checked').value,
+                      description: $('f-desc').value.trim(),
+                      instructions: $('f-instr').value.trim(),
+                      author: me.nick,
+                      authorUid: me.uid,
+                      createdAt: id ? (trains.find(t=>t.id===id)?.createdAt || Date.now()) : Date.now()
+                    };
+                    try {
+                      if (id) { await db.collection('trainings').doc(id).update(data); toast('Updated!'); }
+                      else { await db.collection('trainings').add(data); toast('Created!'); }
+                      closeModal('m-form');
+                    } catch(e) { toast('Save error.'); console.error(e); }
+                  }
+
+                  function openDetail(id) {
+                    curId = id;
+                    const t = trains.find(x => x.id === id);
+                    if (!t) return;
+                    $('d-name').textContent = t.name;
+                    $('d-body').innerHTML = `
+                      <div class="grid">
+                        <div><label>Category</label><span>${tag(t.category)}</span></div>
+                        <div><label>Map</label><span>${esc(t.map)}</span></div>
+                        <div><label>Duration</label><span>${t.duration} min</span></div>
+                        <div><label>Difficulty</label><span style="text-transform:capitalize">${t.difficulty}</span></div>
+                        <div class="full"><label>Description</label><span>${esc(t.description)||'—'}</span></div>
+                      </div>
+                      <div class="author">
+                        <div class="ava" style="background:${avaColor(t.author)}">${t.author[0].toUpperCase()}</div>
+                        <div><strong>${esc(t.author)}</strong><br><span style="font-size:0.78rem;color:var(--muted)">Author</span></div>
+                      </div>
+                      <label style="font-size:0.68rem;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em">Instructions</label>
+                      <div class="box">${esc(t.instructions)||'No instructions.'}</div>`;
+                    modal('m-detail');
+                  }
+
+                  async function delTrain() {
+                    if (!curId || !confirm('Delete this training?')) return;
+                    try { await db.collection('trainings').doc(curId).delete(); closeModal('m-detail'); curId=null; toast('Deleted.'); }
+                    catch(e) { toast('Delete error.'); }
+                  }
+
+                  /* ═══════════════════════════════════════════
+                    SHARE / IMPORT
+                    ═══════════════════════════════════════════ */
+                  function encode(t) {
+                    const p = { name:t.name, category:t.category, map:t.map, duration:t.duration, difficulty:t.difficulty, description:t.description, instructions:t.instructions };
+                    return 'P1EN:' + btoa(unescape(encodeURIComponent(JSON.stringify(p))));
+                  }
+
+                  function decode(code) {
+                    if (!code.startsWith('P1EN:')) throw 0;
+                    return JSON.parse(decodeURIComponent(escape(atob(code.slice(5)))));
+                  }
+
+                  function doShare() {
+                    const t = trains.find(x => x.id === curId);
+                    if (!t) return;
+                    $('share-code').textContent = encode(t);
+                    modal('m-share');
+                  }
+
+                  function doCopy() {
+                    const c = $('share-code').textContent;
+                    navigator.clipboard.writeText(c).then(() => toast('Copied!')).catch(() => {
+                      const ta = document.createElement('textarea'); ta.value = c;
+                      document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta);
+                      toast('Copied!');
+                    });
+                  }
+
+                  async function doImport() {
+                    clrErr('e-import');
+                    const code = $('i-import').value.trim();
+                    if (!code) return err('e-import','Paste a code.');
+                    try {
+                      const d = decode(code);
+                      await db.collection('trainings').add({
+                        name:d.name, category:d.category, map:d.map, duration:d.duration,
+                        difficulty:d.difficulty, description:d.description||'', instructions:d.instructions||'',
+                        author:me.nick, authorUid:me.uid, createdAt:Date.now()
+                      });
+                      closeModal('m-import'); $('i-import').value = ''; toast('Imported!');
+                    } catch { err('e-import','Invalid code.'); }
+                  }
+
+                  /* ═══════════════════════════════════════════
+                    NOTIFICATIONS
+                    ═══════════════════════════════════════════ */
+                  async function renderNotifs() {
+                    const el = $('notif-list');
+                    if (!db) return;
+                    try {
+                      const [ns, bs] = await Promise.all([
+                        db.collection('notifications').orderBy('time','desc').limit(50).get(),
+                        db.collection('broadcasts').orderBy('time','desc').limit(50).get()
+                      ]);
+                      const items = [
+                        ...bs.docs.map(d => { const x=d.data(); return { type:'bc', text:x.message, time:x.time, from:x.from }; }),
+                        ...ns.docs.map(d => { const x=d.data(); return { type:'inv', text:x.text, time:x.time, from:x.from }; })
+                      ].sort((a,b) => b.time - a.time);
+
+                      if (!items.length) { el.innerHTML = '<div class="empty"><p>No notifications</p></div>'; return; }
+                      el.innerHTML = items.map(i => `
+                        <div class="notif ${i.type==='bc'?'bc':''}">
+                          <div>${esc(i.text)}</div>
+                          <div class="t">${i.from?esc(i.from)+' · ':''}${fmtTime(i.time)}</div>
+                        </div>`).join('');
+                    } catch(e) { console.error(e); }
+                  }
+
+                  async function sendInvite() {
+                    const nick = $('i-invite').value.trim();
+                    if (!nick) return toast('Enter nickname.');
+                    try {
+                      await db.collection('notifications').add({ text:`Invited to team by ${me.nick}`, time:Date.now(), from:me.nick, target:nick });
+                      $('i-invite').value = ''; toast('Invite sent!');
+                    } catch(e) { toast('Error.'); }
+                  }
+
+                  async function sendBc() {
+                    const msg = $('i-bc').value.trim();
+                    if (!msg) return toast('Enter message.');
+                    try {
+                      await db.collection('broadcasts').add({ message:msg, time:Date.now(), from:me.nick });
+                      $('i-bc').value = ''; closeModal('m-bc'); toast('Broadcast sent!');
+                    } catch(e) { toast('Error.'); }
+                  }
+
+                  /* ═══════════════════════════════════════════
+                    TEAM & RATING
+                    ═══════════════════════════════════════════ */
+                  function renderTeam() {
+                    $('team-list').innerHTML = TEAM.map(m => `
+                      <div class="row">
+                        <div class="ava" style="background:${avaColor(m.name)}">${m.name[0].toUpperCase()}</div>
+                        <div class="row-info"><div class="n">${esc(m.name)}</div><div class="r">${esc(m.role)}</div></div>
+                        <span class="pill ${m.on?'pill-on':'pill-off'}">${m.on?'Online':'Offline'}</span>
+                      </div>`).join('');
+                  }
+
+                  function renderRating() {
+                    $('rating-list').innerHTML = RATING.map((p,i) => `
+                      <div class="row">
+                        <div class="rank ${i<3?'rank-'+(i+1):''}">${i+1}</div>
+                        <div class="ava" style="background:${avaColor(p.name)}">${p.name[0].toUpperCase()}</div>
+                        <div class="row-info"><div class="n">${esc(p.name)}</div></div>
+                        <div class="score">${p.score}</div>
+                      </div>`).join('');
+                  }
+
+                  /* ═══════════════════════════════════════════
+                    INIT
+                    ═══════════════════════════════════════════ */
+                  $('f-map').innerHTML = MAPS.map(m => `<option value="${m}">${m}</option>`).join('');
+
+                  $('f-login').onsubmit = doLogin;
+                  $('f-reg').onsubmit = doReg;
+                  $('f-admin').onsubmit = doAdmin;
+                  $('b-logout').onclick = doLogout;
+                  $('b-admin-go').onclick = () => { clrErr('e-admin'); screen('s-admin'); };
+                  $('b-admin-back').onclick = () => screen('s-login');
+                  $('b-reg-go').onclick = () => { clrErr('e-reg'); screen('s-reg'); };
+                  $('b-login-go').onclick = () => { clrErr('e-login'); screen('s-login'); };
+
+                  document.querySelectorAll('.tab').forEach(t => t.onclick = () => tab(t.dataset.p));
+                  $('i-search').oninput = e => renderTrains(e.target.value);
+                  $('b-new').onclick = () => openForm();
+                  $('b-import-go').onclick = () => { clrErr('e-import'); $('i-import').value=''; modal('m-import'); };
+                  $('f-training').onsubmit = saveTrain;
+                  $('b-share').onclick = doShare;
+                  $('b-edit').onclick = () => { const t=trains.find(x=>x.id===curId); if(t){closeModal('m-detail');openForm(t);} };
+                  $('b-del').onclick = delTrain;
+                  $('b-copy').onclick = doCopy;
+                  $('b-import').onclick = doImport;
+                  $('b-broadcast').onclick = () => modal('m-bc');
+                  $('b-bc-send').onclick = sendBc;
+                  $('b-invite').onclick = sendInvite;
+
+                  document.querySelectorAll('.x').forEach(b => b.onclick = () => closeModal(b.dataset.x));
+                  document.querySelectorAll('.overlay').forEach(o => o.onclick = e => { if(e.target===o) closeModal(o.id); });
+                  document.onkeydown = e => { if(e.key==='Escape') closeAll(); };
+
+                  auth.onAuthStateChanged(async user => {
+                    if (user) { me = await session(user); if (me) enterMain(); else screen('s-login'); }
+                    else { me = null; screen('s-login'); }
+                  });
+                  </script>
+                  </body>
+                  </html>
