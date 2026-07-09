@@ -1,119 +1,173 @@
 rules_version = '2';
+
 service cloud.firestore {
   match /databases/{database}/documents {
 
-    function signedIn() {
+    // ─────────────────────────────────────────────
+    // Helper functions
+    // ─────────────────────────────────────────────
+    function isAuthenticated() {
       return request.auth != null;
     }
 
-    function admin() {
-      return signedIn()
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+    function isAdmin() {
+      return isAuthenticated()
         && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
     }
 
-    // ── users ──
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    // ─────────────────────────────────────────────
+    // users /{uid}
+    // ─────────────────────────────────────────────
     match /users/{uid} {
-      allow read: if signedIn();
-      allow create: if signedIn() && request.auth.uid == uid;
-      allow update: if signedIn() && (request.auth.uid == uid || admin());
+      // Anyone can read a user profile
+      allow read: if isAuthenticated();
+      // User can write their own doc; admin can write any
+      allow create: if isOwner(uid);
+      allow update: if isOwner(uid) || isAdmin();
+      allow delete: if isAdmin();
     }
 
-    // ── nicknames ──
+    // ─────────────────────────────────────────────
+    // nicknames /{nick}
+    // ─────────────────────────────────────────────
     match /nicknames/{nick} {
-      allow read: if true;
-      allow create, update: if signedIn();
+      // Anyone can read nicknames (to check if taken, look up uid)
+      allow read: if isAuthenticated();
+      // Only the owner can create/update their own nickname mapping
+      // The uid in the doc must match the authenticated user
+      allow create: if isAuthenticated()
+        && request.resource.data.uid == request.auth.uid;
+      allow update: if isAuthenticated()
+        && resource.data.uid == request.auth.uid;
+      allow delete: if isAdmin();
     }
 
-    // ── trainings ──
+    // ─────────────────────────────────────────────
+    // trainings /{id}
+    // ─────────────────────────────────────────────
     match /trainings/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update, delete: if signedIn() && (
-        resource.data.authorUid == request.auth.uid || admin()
-      );
+      // Any authenticated user can read trainings
+      allow read: if isAuthenticated();
+      // Any authenticated user can create a training
+      allow create: if isAuthenticated()
+        && request.resource.data.authorUid == request.auth.uid;
+      // Author or admin can update
+      allow update: if isAuthenticated()
+        && (resource.data.authorUid == request.auth.uid || isAdmin());
+      // Author or admin can delete
+      allow delete: if isAuthenticated()
+        && (resource.data.authorUid == request.auth.uid || isAdmin());
     }
 
-    // ── notifications ──
+    // ─────────────────────────────────────────────
+    // notifications /{id}
+    // ─────────────────────────────────────────────
     match /notifications/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update: if signedIn();
-      allow delete: if admin();
+      // Any authenticated user can read notifications
+      allow read: if isAuthenticated();
+      // Any authenticated user can create a notification
+      allow create: if isAuthenticated()
+        && request.resource.data.fromUid == request.auth.uid;
+      // The target user or admin can update (accept/decline)
+      allow update: if isAuthenticated()
+        && (resource.data.targetUid == request.auth.uid
+            || resource.data.fromUid == request.auth.uid
+            || isAdmin());
+      // Admin can delete
+      allow delete: if isAdmin();
     }
 
-    // ── broadcasts ──
+    // ─────────────────────────────────────────────
+    // broadcasts /{id}
+    // ─────────────────────────────────────────────
     match /broadcasts/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update: if admin();
-      allow delete: if admin();
+      // Any authenticated user can read broadcasts
+      allow read: if isAuthenticated();
+      // Only admin can create broadcasts
+      allow create: if isAdmin();
+      // Only admin can update/delete
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
     }
 
-    // ── teams ──
+    // ─────────────────────────────────────────────
+    // teams /{id}
+    // ─────────────────────────────────────────────
     match /teams/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update, delete: if signedIn() && (
-        resource.data.ownerUid == request.auth.uid || admin()
-      );
+      // Any authenticated user can read teams
+      allow read: if isAuthenticated();
+      // Any authenticated user can create a team
+      allow create: if isAuthenticated()
+        && request.resource.data.ownerUid == request.auth.uid;
+      // Owner or admin can update
+      allow update: if isAuthenticated()
+        && (resource.data.ownerUid == request.auth.uid || isAdmin());
+      // Owner or admin can delete
+      allow delete: if isAuthenticated()
+        && (resource.data.ownerUid == request.auth.uid || isAdmin());
     }
 
-    // ── teamMembers ──
+    // ─────────────────────────────────────────────
+    // teamMembers /{id}
+    // ─────────────────────────────────────────────
     match /teamMembers/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update: if signedIn() && (
-        request.resource.data.uid == request.auth.uid
-        || get(/databases/$(database)/documents/teams/$(resource.data.teamId)).data.ownerUid == request.auth.uid
-        || admin()
-      );
-      allow delete: if signedIn() && (
-        resource.data.uid == request.auth.uid
-        || get(/databases/$(database)/documents/teams/$(resource.data.teamId)).data.ownerUid == request.auth.uid
-        || admin()
-      );
+      // Any authenticated user can read team members
+      allow read: if isAuthenticated();
+      // User can be added to a team (by invite acceptance)
+      allow create: if isAuthenticated()
+        && request.resource.data.uid == request.auth.uid;
+      // User can update their own membership, captain can update team members, admin can update any
+      allow update: if isAuthenticated()
+        && (resource.data.uid == request.auth.uid
+            || isAdmin());
+      // User can delete their own membership (leave team), admin can delete any
+      allow delete: if isAuthenticated()
+        && (resource.data.uid == request.auth.uid
+            || isAdmin());
     }
 
-    // ── transfers ──
+    // ─────────────────────────────────────────────
+    // transfers /{id}
+    // ─────────────────────────────────────────────
     match /transfers/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update: if admin();
-      allow delete: if admin();
+      // Any authenticated user can read transfers
+      allow read: if isAuthenticated();
+      // Any authenticated user can create a transfer
+      allow create: if isAuthenticated();
+      // Admin can update/delete
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
     }
 
-    // ── banpicks ──
+    // ─────────────────────────────────────────────
+    // banpicks /{id}
+    // ─────────────────────────────────────────────
     match /banpicks/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update: if signedIn() && (
-        resource.data.createdByUid == request.auth.uid
-        || resource.data.opponentUid == request.auth.uid
-        || admin()
-      );
-      allow delete: if signedIn() && (
-        resource.data.createdByUid == request.auth.uid || admin()
-      );
+      // Any authenticated user can read banpicks
+      allow read: if isAuthenticated();
+      // Any authenticated user can create a banpick
+      allow create: if isAuthenticated()
+        && request.resource.data.createdByUid == request.auth.uid;
+      // Participants or admin can update
+      allow update: if isAuthenticated()
+        && (resource.data.createdByUid == request.auth.uid
+            || resource.data.opponentUid == request.auth.uid
+            || isAdmin());
+      // Creator or admin can delete
+      allow delete: if isAuthenticated()
+        && (resource.data.createdByUid == request.auth.uid
+            || isAdmin());
     }
 
-    // ── matches ──
-    match /matches/{id} {
-      allow read: if signedIn();
-      allow create: if signedIn();
-      allow update: if signedIn() && (
-        resource.data.authorUid == request.auth.uid || admin()
-      );
-      allow delete: if signedIn() && (
-        resource.data.authorUid == request.auth.uid || admin()
-      );
+    // ─────────────────────────────────────────────
+    // Deny everything else by default
+    // ─────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
     }
-
-    // ── settings ──
-    match /settings/{id} {
-      allow read: if signedIn();
-      allow write: if admin();
-    }
-
   }
 }
