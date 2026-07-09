@@ -1,5 +1,4 @@
 rules_version = '2';
-
 service cloud.firestore {
   match /databases/{database}/documents {
 
@@ -7,169 +6,114 @@ service cloud.firestore {
       return request.auth != null;
     }
 
-    function isAdmin() {
-      return signedIn() &&
-        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    function admin() {
+      return signedIn()
+        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
+        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.isAdmin == true;
     }
 
-    function isOwner(uid) {
-      return signedIn() && request.auth.uid == uid;
-    }
-
-    // ================= USERS =================
-
+    // ── users ──
     match /users/{uid} {
-
-      allow create: if isOwner(uid);
-
       allow read: if signedIn();
-
-      allow update: if isOwner(uid) || isAdmin();
-
-      allow delete: if isAdmin();
+      allow create: if signedIn() && request.auth.uid == uid;
+      allow update: if signedIn() && (request.auth.uid == uid || admin());
     }
 
-    // ================= NOTIFICATIONS =================
-
-    match /notifications/{notificationId} {
-
-      allow read: if signedIn();
-
-      allow create: if isAdmin();
-
-      allow update: if signedIn();
-
-      allow delete: if isAdmin();
+    // ── nicknames ──
+    match /nicknames/{nick} {
+      allow read: if true;
+      allow create, update: if signedIn();
     }
 
-    // ================= TRAININGS =================
-
-    match /trainings/{trainingId} {
-
+    // ── trainings ──
+    match /trainings/{id} {
       allow read: if signedIn();
-
-      allow create: if isAdmin();
-
-      allow update: if isAdmin();
-
-      allow delete: if isAdmin();
-    }
-
-    // ================= PRACTICES =================
-
-    match /practices/{practiceId} {
-
-      allow read: if signedIn();
-
-      allow create: if isAdmin();
-
-      allow update: if isAdmin();
-
-      allow delete: if isAdmin();
-    }
-
-    // ================= SMOKES =================
-
-    match /smokes/{smokeId} {
-
-      allow read: if signedIn();
-
-      allow create: if isAdmin();
-
-      allow update: if isAdmin();
-
-      allow delete: if isAdmin();
-    }
-
-    // ================= NEWS =================
-
-    match /news/{newsId} {
-
-      allow read: if signedIn();
-
-      allow create: if isAdmin();
-
-      allow update: if isAdmin();
-
-      allow delete: if isAdmin();
-    }
-
-    // ================= EVENTS =================
-
-    match /events/{eventId} {
-
-      allow read: if signedIn();
-
-      allow create: if isAdmin();
-
-      allow update: if isAdmin();
-
-      allow delete: if isAdmin();
-    }
-
-    // ================= CHAT =================
-
-    match /chats/{chatId} {
-
-      allow read: if signedIn();
-
       allow create: if signedIn();
+      allow update, delete: if signedIn() && (
+        resource.data.authorUid == request.auth.uid || admin()
+      );
+    }
 
+    // ── notifications ──
+    match /notifications/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn();
       allow update: if signedIn();
-
-      allow delete: if isAdmin();
-
-      match /messages/{messageId} {
-
-        allow read: if signedIn();
-
-        allow create: if signedIn();
-
-        allow update: if false;
-
-        allow delete: if isAdmin();
-      }
+      allow delete: if admin();
     }
 
-    // ================= TEAM =================
-
-    match /team/{memberId} {
-
+    // ── broadcasts ──
+    match /broadcasts/{id} {
       allow read: if signedIn();
-
-      allow create: if isAdmin();
-
-      allow update: if isAdmin();
-
-      allow delete: if isAdmin();
+      allow create: if signedIn();
+      allow update: if admin();
+      allow delete: if admin();
     }
 
-    // ================= SETTINGS =================
-
-    match /settings/{doc} {
-
+    // ── teams ──
+    match /teams/{id} {
       allow read: if signedIn();
-
-      allow write: if isAdmin();
+      allow create: if signedIn();
+      allow update, delete: if signedIn() && (
+        resource.data.ownerUid == request.auth.uid || admin()
+      );
     }
 
-    // ================= FILES =================
-
-    match /files/{fileId} {
-
+    // ── teamMembers ──
+    match /teamMembers/{id} {
       allow read: if signedIn();
-
-      allow write: if isAdmin();
+      allow create: if signedIn();
+      allow update: if signedIn() && (
+        request.resource.data.uid == request.auth.uid
+        || get(/databases/$(database)/documents/teams/$(resource.data.teamId)).data.ownerUid == request.auth.uid
+        || admin()
+      );
+      allow delete: if signedIn() && (
+        resource.data.uid == request.auth.uid
+        || get(/databases/$(database)/documents/teams/$(resource.data.teamId)).data.ownerUid == request.auth.uid
+        || admin()
+      );
     }
 
-    // ================= ANY OTHER COLLECTION =================
-
-    match /{document=**} {
-
+    // ── transfers ──
+    match /transfers/{id} {
       allow read: if signedIn();
-
-      allow write: if isAdmin();
+      allow create: if signedIn();
+      allow update: if admin();
+      allow delete: if admin();
     }
+
+    // ── banpicks ──
+    match /banpicks/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn();
+      allow update: if signedIn() && (
+        resource.data.createdByUid == request.auth.uid
+        || resource.data.opponentUid == request.auth.uid
+        || admin()
+      );
+      allow delete: if signedIn() && (
+        resource.data.createdByUid == request.auth.uid || admin()
+      );
+    }
+
+    // ── matches ──
+    match /matches/{id} {
+      allow read: if signedIn();
+      allow create: if signedIn();
+      allow update: if signedIn() && (
+        resource.data.authorUid == request.auth.uid || admin()
+      );
+      allow delete: if signedIn() && (
+        resource.data.authorUid == request.auth.uid || admin()
+      );
+    }
+
+    // ── settings ──
+    match /settings/{id} {
+      allow read: if signedIn();
+      allow write: if admin();
+    }
+
   }
 }
