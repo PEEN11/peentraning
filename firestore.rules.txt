@@ -1,0 +1,175 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return signedIn() &&
+        exists(/databases/$(database)/documents/users/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+    }
+
+    function isOwner(uid) {
+      return signedIn() && request.auth.uid == uid;
+    }
+
+    // ================= USERS =================
+
+    match /users/{uid} {
+
+      allow create: if isOwner(uid);
+
+      allow read: if signedIn();
+
+      allow update: if isOwner(uid) || isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= NOTIFICATIONS =================
+
+    match /notifications/{notificationId} {
+
+      allow read: if signedIn();
+
+      allow create: if isAdmin();
+
+      allow update: if signedIn();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= TRAININGS =================
+
+    match /trainings/{trainingId} {
+
+      allow read: if signedIn();
+
+      allow create: if isAdmin();
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= PRACTICES =================
+
+    match /practices/{practiceId} {
+
+      allow read: if signedIn();
+
+      allow create: if isAdmin();
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= SMOKES =================
+
+    match /smokes/{smokeId} {
+
+      allow read: if signedIn();
+
+      allow create: if isAdmin();
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= NEWS =================
+
+    match /news/{newsId} {
+
+      allow read: if signedIn();
+
+      allow create: if isAdmin();
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= EVENTS =================
+
+    match /events/{eventId} {
+
+      allow read: if signedIn();
+
+      allow create: if isAdmin();
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= CHAT =================
+
+    match /chats/{chatId} {
+
+      allow read: if signedIn();
+
+      allow create: if signedIn();
+
+      allow update: if signedIn();
+
+      allow delete: if isAdmin();
+
+      match /messages/{messageId} {
+
+        allow read: if signedIn();
+
+        allow create: if signedIn();
+
+        allow update: if false;
+
+        allow delete: if isAdmin();
+      }
+    }
+
+    // ================= TEAM =================
+
+    match /team/{memberId} {
+
+      allow read: if signedIn();
+
+      allow create: if isAdmin();
+
+      allow update: if isAdmin();
+
+      allow delete: if isAdmin();
+    }
+
+    // ================= SETTINGS =================
+
+    match /settings/{doc} {
+
+      allow read: if signedIn();
+
+      allow write: if isAdmin();
+    }
+
+    // ================= FILES =================
+
+    match /files/{fileId} {
+
+      allow read: if signedIn();
+
+      allow write: if isAdmin();
+    }
+
+    // ================= ANY OTHER COLLECTION =================
+
+    match /{document=**} {
+
+      allow read: if signedIn();
+
+      allow write: if isAdmin();
+    }
+  }
+}
