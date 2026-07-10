@@ -10,561 +10,86 @@
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #050505;
-      --glass: rgba(255,255,255,0.05);
-      --glass-hover: rgba(255,255,255,0.09);
-      --border: rgba(255,255,255,0.1);
-      --border-light: rgba(255,255,255,0.2);
-      --text: #f0f0f0;
-      --muted: #777;
-      --white: #fff;
-      --blur: 28px;
-      --radius: 22px;
-      --radius-sm: 12px;
-      --shadow: 0 8px 40px rgba(0,0,0,0.5);
-      --input-bg: rgba(255,255,255,0.03);
-      --input-focus-bg: rgba(255,255,255,0.06);
-      --btn-bg: rgba(255,255,255,0.06);
-      --btn-hover-bg: rgba(255,255,255,0.12);
-      --badge-bg: rgba(255,255,255,0.1);
-      --tag-bg: rgba(255,255,255,0.06);
-      --tag-color: #ccc;
-      --pill-on-bg: rgba(255,255,255,0.08);
-      --pill-off-bg: rgba(255,255,255,0.02);
+      --bg: #0a0a0f;
+      --glass: rgba(20, 20, 30, 0.6);
+      --glass-hover: rgba(30, 30, 45, 0.75);
+      --glass-light: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.08);
+      --border-light: rgba(255, 255, 255, 0.15);
+      --text: #e8e8ed;
+      --muted: #6b6b7b;
+      --white: #ffffff;
+      --blur: 32px;
+      --radius: 20px;
+      --radius-sm: 14px;
+      --shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      --input-bg: rgba(255, 255, 255, 0.04);
+      --input-focus-bg: rgba(255, 255, 255, 0.08);
+      --btn-bg: rgba(255, 255, 255, 0.08);
+      --btn-hover-bg: rgba(255, 255, 255, 0.14);
+      --badge-bg: rgba(255, 255, 255, 0.1);
+      --tag-bg: rgba(255, 255, 255, 0.06);
+      --tag-color: #b0b0b8;
+      --pill-on-bg: rgba(255, 255, 255, 0.1);
+      --pill-off-bg: rgba(255, 255, 255, 0.03);
       --pill-off-color: #555;
-      --rank-bg: rgba(255,255,255,0.04);
+      --rank-bg: rgba(255, 255, 255, 0.05);
       --rank-color: var(--muted);
-      --rank1-bg: rgba(255,255,255,0.18);
-      --rank2-bg: rgba(255,255,255,0.1);
+      --rank1-bg: rgba(255, 255, 255, 0.2);
+      --rank2-bg: rgba(255, 255, 255, 0.12);
       --rank2-color: #ddd;
-      --rank3-bg: rgba(255,255,255,0.06);
+      --rank3-bg: rgba(255, 255, 255, 0.07);
       --rank3-color: #aaa;
       --notif-bg: var(--glass);
-      --notif-border-left: rgba(255,255,255,0.35);
-      --team-header-bg: rgba(255,255,255,0.04);
-      --modal-bg: rgba(18,18,18,0.9);
-      --overlay-bg: rgba(0,0,0,0.8);
-      --box-bg: rgba(255,255,255,0.02);
+      --notif-border-left: rgba(255, 255, 255, 0.3);
+      --team-header-bg: rgba(255, 255, 255, 0.04);
+      --modal-bg: rgba(15, 15, 20, 0.92);
+      --overlay-bg: rgba(0, 0, 0, 0.75);
+      --box-bg: rgba(255, 255, 255, 0.03);
       --box-color: #bbb;
-      --code-bg: rgba(255,255,255,0.02);
+      --code-bg: rgba(255, 255, 255, 0.03);
       --code-color: #888;
-      --author-bg: rgba(255,255,255,0.03);
-      --x-bg: rgba(255,255,255,0.05);
-      --x-hover-bg: rgba(255,255,255,0.1);
-      --orb1-bg: rgba(255,255,255,0.03);
-      --orb2-bg: rgba(255,255,255,0.02);
-      --tab-active-bg: rgba(255,255,255,0.09);
-      --tabs-bg: rgba(255,255,255,0.03);
-      --err-bg: rgba(255,255,255,0.04);
+      --author-bg: rgba(255, 255, 255, 0.03);
+      --x-bg: rgba(255, 255, 255, 0.06);
+      --x-hover-bg: rgba(255, 255, 255, 0.12);
+      --orb1-bg: rgba(100, 100, 255, 0.08);
+      --orb2-bg: rgba(150, 100, 255, 0.06);
+      --tab-active-bg: rgba(255, 255, 255, 0.1);
+      --tabs-bg: rgba(255, 255, 255, 0.03);
+      --err-bg: rgba(255, 255, 255, 0.04);
       --err-color: #aaa;
-      --card-hover-shadow: 0 12px 40px rgba(0,0,0,0.55), inset 0 1px 0 rgba(255,255,255,0.08);
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --accent-light: rgba(59,130,246,0.1);
+      --card-hover-shadow: 0 12px 40px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.08);
+      --accent: #7c3aed;
+      --accent-hover: #6d28d9;
+      --accent-light: rgba(124, 58, 237, 0.15);
       --btn-color: #fff;
       --btn-ghost-color: var(--muted);
       --btn-ghost-hover-color: var(--white);
       --btn-outline-color: var(--muted);
       --btn-outline-hover-color: var(--white);
-      --btn-outline-hover-bg: rgba(255,255,255,0.04);
+      --btn-outline-hover-bg: rgba(255, 255, 255, 0.05);
       --btn-danger-color: #999;
       --btn-danger-hover-color: var(--white);
-      --btn-danger-hover-bg: rgba(255,255,255,0.08);
+      --btn-danger-hover-bg: rgba(255, 255, 255, 0.08);
       --rank1-color: var(--white);
       --score-color: var(--white);
       --badge-border: var(--border-light);
       --badge-color: var(--white);
     }
 
-    /* Gradient animations for light & green themes */
+    /* Animated gradient background */
     @keyframes gradientShift {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
       100% { background-position: 0% 50%; }
     }
 
-    body.light {
-      --bg: #f0f4f8;
-      --glass: rgba(255,255,255,0.75);
-      --glass-hover: rgba(255,255,255,0.92);
-      --border: rgba(0,0,0,0.08);
-      --border-light: rgba(0,0,0,0.15);
-      --text: #1a1a2e;
-      --muted: #5a6a7e;
-      --white: #0d2b4e;
-      --shadow: 0 8px 32px rgba(0,0,0,0.08);
-      --input-bg: rgba(0,0,0,0.03);
-      --input-focus-bg: rgba(0,0,0,0.06);
-      --btn-bg: linear-gradient(135deg, #3b82f6, #2563eb);
-      --btn-hover-bg: linear-gradient(135deg, #2563eb, #1d4ed8);
-      --badge-bg: linear-gradient(135deg, #3b82f6, #2563eb);
-      --tag-bg: rgba(59,130,246,0.1);
-      --tag-color: #2563eb;
-      --pill-on-bg: rgba(59,130,246,0.12);
-      --pill-off-bg: rgba(0,0,0,0.03);
-      --pill-off-color: #8899aa;
-      --rank-bg: rgba(0,0,0,0.04);
-      --rank-color: #8899aa;
-      --rank1-bg: linear-gradient(135deg, #3b82f6, #2563eb);
-      --rank2-bg: rgba(59,130,246,0.15);
-      --rank2-color: #2563eb;
-      --rank3-bg: rgba(59,130,246,0.08);
-      --rank3-color: #3b82f6;
-      --notif-bg: rgba(255,255,255,0.85);
-      --notif-border-left: #3b82f6;
-      --team-header-bg: rgba(59,130,246,0.06);
-      --modal-bg: rgba(255,255,255,0.95);
-      --overlay-bg: rgba(0,0,0,0.35);
-      --box-bg: rgba(0,0,0,0.03);
-      --box-color: #3a4a5e;
-      --code-bg: rgba(0,0,0,0.03);
-      --code-color: #3a4a5e;
-      --author-bg: rgba(0,0,0,0.03);
-      --x-bg: rgba(0,0,0,0.05);
-      --x-hover-bg: rgba(0,0,0,0.1);
-      --orb1-bg: rgba(59,130,246,0.04);
-      --orb2-bg: rgba(59,130,246,0.03);
-      --tab-active-bg: rgba(59,130,246,0.1);
-      --tabs-bg: rgba(0,0,0,0.03);
-      --err-bg: rgba(0,0,0,0.03);
-      --err-color: #5a6a7e;
-      --card-hover-shadow: 0 12px 36px rgba(0,0,0,0.12), inset 0 1px 0 rgba(0,0,0,0.06);
-      --accent: #3b82f6;
-      --accent-hover: #2563eb;
-      --accent-light: rgba(59,130,246,0.1);
-      --btn-color: #fff;
-      --btn-ghost-color: #3b82f6;
-      --btn-ghost-hover-color: #2563eb;
-      --btn-outline-color: #3b82f6;
-      --btn-outline-hover-color: #2563eb;
-      --btn-outline-hover-bg: rgba(59,130,246,0.06);
-      --btn-danger-color: #888;
-      --btn-danger-hover-color: #1a1a2e;
-      --btn-danger-hover-bg: rgba(0,0,0,0.08);
-      --rank1-color: #fff;
-      --score-color: #2563eb;
-      --badge-border: none;
-      --badge-color: #fff;
-    }
-    body.light::before {
-      background: linear-gradient(-45deg, #e8f0fe, #d4e4f7, #c5d9f2, #dbeafe, #e8f0fe) !important;
-      background-size: 400% 400% !important;
-      animation: gradientShift 12s ease infinite;
-    }
-    body.light .panel::after {
-      background: linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent);
-    }
-
-    body.green {
-      --bg: #f0f7f4;
-      --glass: rgba(255,255,255,0.75);
-      --glass-hover: rgba(255,255,255,0.92);
-      --border: rgba(0,0,0,0.08);
-      --border-light: rgba(0,0,0,0.15);
-      --text: #1a2e1a;
-      --muted: #5a7e5a;
-      --white: #0d4e0d;
-      --shadow: 0 8px 32px rgba(0,0,0,0.08);
-      --input-bg: rgba(0,0,0,0.03);
-      --input-focus-bg: rgba(0,0,0,0.06);
-      --btn-bg: linear-gradient(135deg, #22c55e, #16a34a);
-      --btn-hover-bg: linear-gradient(135deg, #16a34a, #15803d);
-      --badge-bg: linear-gradient(135deg, #22c55e, #16a34a);
-      --tag-bg: rgba(34,197,94,0.1);
-      --tag-color: #16a34a;
-      --pill-on-bg: rgba(34,197,94,0.12);
-      --pill-off-bg: rgba(0,0,0,0.03);
-      --pill-off-color: #88aa88;
-      --rank-bg: rgba(0,0,0,0.04);
-      --rank-color: #88aa88;
-      --rank1-bg: linear-gradient(135deg, #22c55e, #16a34a);
-      --rank2-bg: rgba(34,197,94,0.15);
-      --rank2-color: #16a34a;
-      --rank3-bg: rgba(34,197,94,0.08);
-      --rank3-color: #22c55e;
-      --notif-bg: rgba(255,255,255,0.85);
-      --notif-border-left: #22c55e;
-      --team-header-bg: rgba(34,197,94,0.06);
-      --modal-bg: rgba(255,255,255,0.95);
-      --overlay-bg: rgba(0,0,0,0.35);
-      --box-bg: rgba(0,0,0,0.03);
-      --box-color: #3a5e3a;
-      --code-bg: rgba(0,0,0,0.03);
-      --code-color: #3a5e3a;
-      --author-bg: rgba(0,0,0,0.03);
-      --x-bg: rgba(0,0,0,0.05);
-      --x-hover-bg: rgba(0,0,0,0.1);
-      --orb1-bg: rgba(34,197,94,0.04);
-      --orb2-bg: rgba(34,197,94,0.03);
-      --tab-active-bg: rgba(34,197,94,0.1);
-      --tabs-bg: rgba(0,0,0,0.03);
-      --err-bg: rgba(0,0,0,0.03);
-      --err-color: #5a7e5a;
-      --card-hover-shadow: 0 12px 36px rgba(0,0,0,0.12), inset 0 1px 0 rgba(0,0,0,0.06);
-      --accent: #22c55e;
-      --accent-hover: #16a34a;
-      --accent-light: rgba(34,197,94,0.1);
-      --btn-color: #fff;
-      --btn-ghost-color: #22c55e;
-      --btn-ghost-hover-color: #16a34a;
-      --btn-outline-color: #22c55e;
-      --btn-outline-hover-color: #16a34a;
-      --btn-outline-hover-bg: rgba(34,197,94,0.06);
-      --btn-danger-color: #888;
-      --btn-danger-hover-color: #1a2e1a;
-      --btn-danger-hover-bg: rgba(0,0,0,0.08);
-      --rank1-color: #fff;
-      --score-color: #16a34a;
-      --badge-border: none;
-      --badge-color: #fff;
-    }
-    body.green::before {
-      background: linear-gradient(-45deg, #e8f5e9, #c8e6c9, #a5d6a7, #c8e6c9, #e8f5e9) !important;
-      background-size: 400% 400% !important;
-      animation: gradientShift 12s ease infinite;
-    }
-    body.green .panel::after {
-      background: linear-gradient(90deg, transparent, rgba(34,197,94,0.2), transparent);
-    }
-
-    body.japan {
-      --bg: #0a0a0f;
-      --glass: rgba(20,15,20,0.7);
-      --glass-hover: rgba(30,20,30,0.85);
-      --border: rgba(200,50,50,0.2);
-      --border-light: rgba(200,50,50,0.35);
-      --text: #e8d5c4;
-      --muted: #8b7b6b;
-      --white: #d4a574;
-      --shadow: 0 8px 40px rgba(200,50,50,0.15);
-      --input-bg: rgba(200,50,50,0.05);
-      --input-focus-bg: rgba(200,50,50,0.1);
-      --btn-bg: linear-gradient(135deg, #8b0000, #5c0000);
-      --btn-hover-bg: linear-gradient(135deg, #a00000, #700000);
-      --badge-bg: linear-gradient(135deg, #8b0000, #5c0000);
-      --tag-bg: rgba(200,50,50,0.15);
-      --tag-color: #d4a574;
-      --pill-on-bg: rgba(200,50,50,0.2);
-      --pill-off-bg: rgba(200,50,50,0.05);
-      --pill-off-color: #6b5b4b;
-      --rank-bg: rgba(200,50,50,0.08);
-      --rank-color: #8b7b6b;
-      --rank1-bg: linear-gradient(135deg, #d4a574, #8b0000);
-      --rank2-bg: rgba(200,50,50,0.2);
-      --rank2-color: #d4a574;
-      --rank3-bg: rgba(200,50,50,0.1);
-      --rank3-color: #c49a6c;
-      --notif-bg: rgba(20,15,20,0.8);
-      --notif-border-left: #8b0000;
-      --team-header-bg: rgba(200,50,50,0.1);
-      --modal-bg: rgba(10,8,12,0.95);
-      --overlay-bg: rgba(0,0,0,0.9);
-      --box-bg: rgba(200,50,50,0.08);
-      --box-color: #c4a882;
-      --code-bg: rgba(200,50,50,0.08);
-      --code-color: #c4a882;
-      --author-bg: rgba(200,50,50,0.08);
-      --x-bg: rgba(200,50,50,0.15);
-      --x-hover-bg: rgba(200,50,50,0.3);
-      --orb1-bg: rgba(200,50,50,0.06);
-      --orb2-bg: rgba(200,50,50,0.04);
-      --tab-active-bg: rgba(200,50,50,0.2);
-      --tabs-bg: rgba(200,50,50,0.08);
-      --err-bg: rgba(200,50,50,0.1);
-      --err-color: #c4a882;
-      --card-hover-shadow: 0 12px 40px rgba(200,50,50,0.25), inset 0 1px 0 rgba(200,50,50,0.15);
-      --accent: #8b0000;
-      --accent-hover: #a00000;
-      --accent-light: rgba(200,50,50,0.15);
-      --btn-color: #e8d5c4;
-      --btn-ghost-color: #8b7b6b;
-      --btn-ghost-hover-color: #d4a574;
-      --btn-outline-color: #8b7b6b;
-      --btn-outline-hover-color: #d4a574;
-      --btn-outline-hover-bg: rgba(200,50,50,0.1);
-      --btn-danger-color: #8b7b6b;
-      --btn-danger-hover-color: #d4a574;
-      --btn-danger-hover-bg: rgba(200,50,50,0.2);
-      --rank1-color: #e8d5c4;
-      --score-color: #d4a574;
-      --badge-border: none;
-      --badge-color: #e8d5c4;
-    }
-
-    body.japan .panel::after {
-      background: linear-gradient(90deg, transparent, rgba(200,50,50,0.3), transparent);
-    }
-
-    body.japan input,
-    body.japan select,
-    body.japan textarea {
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    body.japan input::placeholder,
-    body.japan textarea::placeholder {
-      color: #6b5b4b;
-    }
-
-    body.japan input:focus,
-    body.japan select:focus,
-    body.japan textarea:focus {
-      border-color: #8b0000;
-      background: var(--input-focus-bg);
-      box-shadow: 0 0 0 3px rgba(200,50,50,0.2);
-    }
-
-    body.japan select option {
-      background: #0a0a0f;
-      color: #e8d5c4;
-    }
-
-    body.japan .btn {
-      color: var(--btn-color);
-      border: none;
-      font-weight: 600;
-      letter-spacing: 0.02em;
-    }
-
-    body.japan .btn-ghost {
-      background: transparent;
-      color: var(--btn-ghost-color);
-      border: 1px solid rgba(200,50,50,0.3);
-    }
-
-    body.japan .btn-ghost:hover {
-      background: rgba(200,50,50,0.15);
-      color: var(--btn-ghost-hover-color);
-      border-color: rgba(200,50,50,0.5);
-    }
-
-    body.japan .btn-outline {
-      background: transparent;
-      color: var(--btn-outline-color);
-      border: 1px solid rgba(200,50,50,0.35);
-    }
-
-    body.japan .btn-outline:hover {
-      background: var(--btn-outline-hover-bg);
-      color: var(--btn-outline-hover-color);
-      border-color: rgba(200,50,50,0.6);
-    }
-
-    body.japan .btn-danger {
-      color: var(--btn-danger-color);
-      background: rgba(200,50,50,0.08);
-      border: 1px solid rgba(200,50,50,0.2);
-    }
-
-    body.japan .btn-danger:hover {
-      color: var(--btn-danger-hover-color);
-      background: var(--btn-danger-hover-bg);
-      border-color: rgba(200,50,50,0.4);
-    }
-
-    body.japan .badge {
-      color: var(--badge-color);
-      background: var(--badge-bg);
-      border: var(--badge-border);
-    }
-
-    body.japan .dot {
-      background: #8b0000;
-      box-shadow: 0 0 10px rgba(200,50,50,0.6);
-    }
-
-    body.japan .logout {
-      color: #8b7b6b;
-    }
-
-    body.japan .logout:hover {
-      color: #d4a574;
-    }
-
-    body.japan .rank-1 {
-      color: var(--rank1-color);
-      border-color: rgba(200,50,50,0.5);
-      box-shadow: 0 0 14px rgba(200,50,50,0.25);
-    }
-
-    body.japan .notif {
-      border-left: 2px solid var(--notif-border-left);
-    }
-
-    body.japan .notif.bc {
-      border-left-color: #8b0000;
-    }
-
-    body.japan .notif.invite {
-      border-left-color: rgba(200,50,50,0.7);
-    }
-
-    body.japan .x {
-      color: #8b7b6b;
-    }
-
-    body.japan .x:hover {
-      color: #d4a574;
-    }
-
-    body.japan .link a {
-      color: #d4a574;
-      border-bottom: 1px solid rgba(200,50,50,0.4);
-    }
-
-    body.japan .link a:hover {
-      color: #e8c9a0;
-      border-bottom-color: rgba(200,50,50,0.7);
-    }
-
-    body.japan .card:hover {
-      border-color: rgba(200,50,50,0.3);
-    }
-
-    body.japan .tag {
-      background: var(--tag-bg);
-      color: var(--tag-color);
-      border-color: rgba(200,50,50,0.25);
-    }
-
-    body.japan .pill-on {
-      background: var(--pill-on-bg);
-      color: #d4a574;
-      border-color: rgba(200,50,50,0.3);
-    }
-
-    body.japan .pill-off {
-      background: var(--pill-off-bg);
-      color: var(--pill-off-color);
-    }
-
-    body.japan .score {
-      color: var(--score-color);
-    }
-
-    body.japan .invite-box {
-      background: rgba(200,50,50,0.08);
-      border-color: rgba(200,50,50,0.25);
-    }
-
-    body.japan .invite-box h4 {
-      color: #d4a574;
-    }
-
-    body.japan .team-header {
-      background: var(--team-header-bg);
-    }
-
-    body.japan .team-header h3 {
-      color: #d4a574;
-    }
-
-    body.japan .admin-bar {
-      background: rgba(200,50,50,0.1);
-      border-color: rgba(200,50,50,0.25);
-    }
-
-    body.japan .admin-bar span {
-      color: #d4a574;
-    }
-
-    body.japan .sub.admin {
-      color: #d4a574;
-    }
-
-    body.japan .toast {
-      background: rgba(10,8,12,0.95);
-      border: 1px solid rgba(200,50,50,0.3);
-      color: #e8d5c4;
-      box-shadow: 0 8px 32px rgba(200,50,50,0.2);
-    }
-
-    body.japan .radios input {
-      accent-color: #8b0000;
-    }
-
-    body.japan .settings-option {
-      background: rgba(200,50,50,0.05);
-      border: 1px solid rgba(200,50,50,0.15);
-    }
-
-    body.japan .settings-option:hover {
-      border-color: rgba(200,50,50,0.3);
-      background: rgba(200,50,50,0.1);
-    }
-
-    body.japan .settings-option.active {
-      border-color: #8b0000;
-      background: rgba(200,50,50,0.15);
-      box-shadow: 0 0 0 3px rgba(200,50,50,0.2);
-    }
-
-    body.japan .theme-preview-dark {
-      background: #1a1a2e;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    body.japan .theme-preview-light {
-      background: #f0f4f8;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.japan .theme-preview-green {
-      background: #e8f5e9;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.japan .theme-preview-japan {
-      background: #1a0a0a;
-      border: 1px solid rgba(200,50,50,0.3);
-    }
-
-    body.japan .settings-label {
-      color: #d4a574;
-    }
-
-    body.japan .settings-desc {
-      color: #8b7b6b;
-    }
-
-    body.japan::before {
-      background:
-        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(200,50,50,0.1), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 90%, rgba(200,50,50,0.08), transparent 55%),
-        linear-gradient(180deg, #0f0808, #0a0a0f);
-    }
-
-    body.japan .transfer-sidebar {
-      background: rgba(20,15,20,0.9);
-      border-right: 1px solid rgba(200,50,50,0.25);
-    }
-
-    body.japan .transfer-item {
-      border-bottom: 1px solid rgba(200,50,50,0.15);
-    }
-
-    body.japan .transfer-item:hover {
-      background: rgba(200,50,50,0.1);
-    }
-
-    body.japan .bp-card {
-      border-left: 3px solid #8b0000;
-    }
-
-    body.japan .bp-card.waiting {
-      border-left-color: #d4a574;
-    }
-
-    body.japan .bp-card.done {
-      border-left-color: #5c5c5c;
+    @keyframes pulse {
+      0%, 100% { opacity: 0.6; }
+      50% { opacity: 1; }
     }
 
     html { color-scheme: dark; }
-    body.light { color-scheme: light; }
-    body.green { color-scheme: light; }
-    body.japan { color-scheme: dark; }
 
     body {
       font-family: 'Inter', 'Segoe UI', sans-serif;
@@ -573,34 +98,69 @@
       min-height: 100vh;
       line-height: 1.5;
       transition: background 0.4s ease, color 0.4s ease;
+      position: relative;
+      overflow-x: hidden;
     }
 
+    /* Animated gradient background */
     body::before {
       content: '';
       position: fixed;
       inset: 0;
-      background:
-        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(255,255,255,0.06), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 90%, rgba(255,255,255,0.04), transparent 55%),
-        linear-gradient(180deg, #0a0a0a, #050505);
-      z-index: -1;
+      background: linear-gradient(-45deg, 
+        #0a0a0f, 
+        #1a1a2e, 
+        #16213e, 
+        #0f3460, 
+        #1a1a2e, 
+        #0a0a0f
+      );
+      background-size: 400% 400%;
+      animation: gradientShift 15s ease infinite;
+      z-index: -2;
       transition: background 0.4s ease;
     }
 
+    /* Liquid glass orbs */
     .orb {
       position: fixed;
       border-radius: 50%;
-      filter: blur(80px);
+      filter: blur(100px);
       pointer-events: none;
       z-index: -1;
       transition: background 0.4s ease;
+      animation: drift 20s ease-in-out infinite;
     }
-    .orb-1 { width: 350px; height: 350px; background: var(--orb1-bg); top: -80px; right: -60px; animation: drift 14s ease-in-out infinite; }
-    .orb-2 { width: 250px; height: 250px; background: var(--orb2-bg); bottom: 10%; left: -40px; animation: drift 18s ease-in-out infinite reverse; }
+    .orb-1 { 
+      width: 500px; 
+      height: 500px; 
+      background: var(--orb1-bg); 
+      top: -150px; 
+      right: -150px; 
+    }
+    .orb-2 { 
+      width: 400px; 
+      height: 400px; 
+      background: var(--orb2-bg); 
+      bottom: -100px; 
+      left: -100px; 
+      animation-delay: -10s;
+    }
+    .orb-3 {
+      width: 300px;
+      height: 300px;
+      background: rgba(124, 58, 237, 0.1);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      animation: drift 25s ease-in-out infinite reverse;
+    }
 
     @keyframes drift {
-      0%, 100% { transform: translate(0,0); }
-      50% { transform: translate(25px, 35px); }
+      0%, 100% { transform: translate(0, 0) scale(1); }
+      25% { transform: translate(30px, -30px) scale(1.05); }
+      50% { transform: translate(-20px, 20px) scale(0.95); }
+      75% { transform: translate(-30px, -20px) scale(1.02); }
     }
 
     @keyframes fadeUp {
@@ -617,9 +177,10 @@
     .transfer-sidebar {
       width: 320px;
       min-width: 320px;
-      background: rgba(255,255,255,0.02);
+      background: var(--glass);
+      backdrop-filter: blur(var(--blur)) saturate(180%);
+      -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
       border-right: 1px solid var(--border);
-      backdrop-filter: blur(20px);
       padding: 20px 16px;
       overflow-y: auto;
       max-height: 100vh;
@@ -644,7 +205,8 @@
       margin-bottom: 8px;
       border-radius: var(--radius-sm);
       border: 1px solid var(--border);
-      background: var(--glass);
+      background: var(--glass-light);
+      backdrop-filter: blur(12px);
       transition: 0.25s;
     }
 
@@ -705,11 +267,11 @@
     /* ── Glass panel ── */
     .panel {
       background: var(--glass);
-      backdrop-filter: blur(var(--blur)) saturate(160%);
-      -webkit-backdrop-filter: blur(var(--blur)) saturate(160%);
+      backdrop-filter: blur(var(--blur)) saturate(180%);
+      -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.07);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       padding: 32px 26px;
       position: relative;
       overflow: hidden;
@@ -720,7 +282,7 @@
       position: absolute;
       top: 0; left: 10%; right: 10%;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
       transition: background 0.4s ease;
     }
 
@@ -745,6 +307,7 @@
       border-radius: var(--radius-sm);
       color: var(--text); font: inherit; font-size: 0.93rem;
       transition: 0.25s;
+      backdrop-filter: blur(8px);
     }
     input::placeholder, textarea::placeholder { color: #444; }
     select option { background: #111; }
@@ -752,7 +315,7 @@
       outline: none;
       border-color: var(--border-light);
       background: var(--input-focus-bg);
-      box-shadow: 0 0 0 3px rgba(255,255,255,0.04);
+      box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
     }
     textarea { resize: vertical; min-height: 76px; }
 
@@ -773,7 +336,7 @@
     .btn-outline { background: transparent; border-color: var(--border-light); color: var(--btn-outline-color); margin-top: 10px; }
     .btn-outline:hover { color: var(--btn-outline-hover-color); background: var(--btn-outline-hover-bg); }
     .btn-sm { padding: 7px 13px; font-size: 0.82rem; width: auto; }
-    .btn-danger { color: var(--btn-danger-color); background: rgba(255,255,255,0.03); }
+    .btn-danger { color: var(--btn-danger-color); background: rgba(255, 255, 255, 0.03); }
     .btn-danger:hover { color: var(--btn-danger-hover-color); background: var(--btn-danger-hover-bg); }
     .btn-w100 { width: 100%; margin-top: 12px; }
     .btn-icon {
@@ -804,7 +367,7 @@
     .err.on { display: block; }
 
     .link { text-align: center; margin-top: 18px; font-size: 0.88rem; color: var(--muted); transition: color 0.4s ease; }
-    .link a { color: var(--white); cursor: pointer; border-bottom: 1px solid rgba(255,255,255,0.25); text-decoration: none; transition: color 0.4s ease; }
+    .link a { color: var(--white); cursor: pointer; border-bottom: 1px solid rgba(255, 255, 255, 0.25); text-decoration: none; transition: color 0.4s ease; }
 
     /* ── Header ── */
     .top {
@@ -812,15 +375,16 @@
       flex-wrap: wrap; gap: 10px;
       padding: 14px 18px; margin-bottom: 18px;
       background: var(--glass);
-      backdrop-filter: blur(var(--blur));
+      backdrop-filter: blur(var(--blur)) saturate(180%);
+      -webkit-backdrop-filter: blur(var(--blur)) saturate(180%);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.05);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.05);
       transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
     .top .logo { font-size: 1.3rem; text-align: left; }
     .user { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; margin-left: auto; }
-    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--white); box-shadow: 0 0 8px rgba(255,255,255,0.5); transition: background 0.4s ease; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--white); box-shadow: 0 0 8px rgba(255, 255, 255, 0.5); transition: background 0.4s ease; }
     .badge {
       font-size: 0.6rem; font-weight: 700; padding: 2px 7px;
       border: 1px solid var(--badge-border); border-radius: 5px;
@@ -903,7 +467,7 @@
     .tab:hover { color: var(--text); }
     .tab.on {
       background: var(--tab-active-bg); color: var(--white); font-weight: 600;
-      border: 1px solid var(--border); box-shadow: inset 0 1px 0 rgba(255,255,255,0.08);
+      border: 1px solid var(--border); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
       transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
     }
     .page { display: none; animation: fadeUp 0.3s ease; }
@@ -913,7 +477,7 @@
     .admin-bar {
       display: none; align-items: center; justify-content: space-between;
       padding: 11px 15px; margin-bottom: 14px;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-sm);
       backdrop-filter: blur(12px);
@@ -936,7 +500,7 @@
       backdrop-filter: blur(20px) saturate(150%);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.04);
       transition: 0.3s;
     }
     .card:hover {
@@ -972,7 +536,7 @@
       width: 40px; height: 40px; border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
       font-weight: 700; font-size: 0.95rem; color: #111;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.2);
       flex-shrink: 0;
     }
     .row-info { flex: 1; }
@@ -993,8 +557,8 @@
       color: var(--rank-color); flex-shrink: 0;
       transition: background 0.4s ease, color 0.4s ease, border-color 0.4s ease;
     }
-    .rank-1 { background: var(--rank1-bg); color: var(--rank1-color); border-color: rgba(255,255,255,0.35); box-shadow: 0 0 14px rgba(255,255,255,0.1); }
-    .rank-2 { background: var(--rank2-bg); color: var(--rank2-color); border-color: rgba(255,255,255,0.22); }
+    .rank-1 { background: var(--rank1-bg); color: var(--rank1-color); border-color: rgba(255, 255, 255, 0.35); box-shadow: 0 0 14px rgba(255, 255, 255, 0.1); }
+    .rank-2 { background: var(--rank2-bg); color: var(--rank2-color); border-color: rgba(255, 255, 255, 0.22); }
     .rank-3 { background: var(--rank3-bg); color: var(--rank3-color); }
     .score { font-weight: 700; color: var(--score-color); transition: color 0.4s ease; }
 
@@ -1025,7 +589,7 @@
       backdrop-filter: blur(var(--blur)) saturate(170%);
       border: 1px solid var(--border-light);
       border-radius: var(--radius);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.07);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.07);
       animation: fadeUp 0.35s ease;
       transition: background 0.4s ease, border-color 0.4s ease;
     }
@@ -1181,7 +745,7 @@
     }
     .friend-toast-item {
       pointer-events: auto;
-      background: rgba(18,18,18,0.95);
+      background: rgba(20, 20, 30, 0.95);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border-light);
       border-left: 3px solid var(--accent);
@@ -1208,7 +772,7 @@
     /* ── Notifications ── */
     .invite-box {
       padding: 18px; margin-bottom: 16px;
-      background: rgba(255,255,255,0.04);
+      background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-light);
       border-radius: var(--radius);
       backdrop-filter: blur(12px);
@@ -1272,7 +836,7 @@
       50% { transform: scale(1.3); opacity: 0.7; }
     }
     .notif.bc { border-left-color: var(--white); }
-    .notif.invite { border-left-color: rgba(255,255,255,0.6); }
+    .notif.invite { border-left-color: rgba(255, 255, 255, 0.6); }
     .notif.bp-invite { border-left-color: var(--accent); }
     .notif .t { font-size: 0.72rem; color: var(--muted); margin-top: 3px; transition: color 0.4s ease; }
     .notif-actions { display: flex; gap: 8px; margin-top: 10px; }
@@ -1352,6 +916,29 @@
       color: var(--btn-danger-hover-color);
       background: var(--btn-danger-hover-bg);
     }
+
+    /* ── Team Roles ── */
+    .role-select {
+      padding: 6px 10px;
+      background: var(--input-bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--text);
+      font-size: 0.82rem;
+      cursor: pointer;
+      transition: 0.25s;
+      backdrop-filter: blur(8px);
+    }
+    .role-select:focus {
+      outline: none;
+      border-color: var(--border-light);
+      background: var(--input-focus-bg);
+    }
+    .role-awp { border-left: 3px solid #ef4444; }
+    .role-rifler { border-left: 3px solid #3b82f6; }
+    .role-support { border-left: 3px solid #22c55e; }
+    .role-igl { border-left: 3px solid #f59e0b; }
+    .role-captain { border-left: 3px solid #a855f7; }
 
     /* ── Ban-Pick ── */
     .bp-card {
@@ -1441,8 +1028,8 @@
       border-color: var(--border-light);
     }
     .bp-map.banned {
-      background: rgba(255,0,0,0.15);
-      border-color: rgba(255,0,0,0.4);
+      background: rgba(255, 0, 0, 0.15);
+      border-color: rgba(255, 0, 0, 0.4);
       color: #ff4444;
       text-decoration: line-through;
       cursor: not-allowed;
@@ -1456,12 +1043,12 @@
     }
     .bp-map.current-turn {
       border-color: var(--white);
-      box-shadow: 0 0 12px rgba(255,255,255,0.2);
+      box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
       animation: pulse-border 2s infinite;
     }
     @keyframes pulse-border {
-      0%, 100% { box-shadow: 0 0 8px rgba(255,255,255,0.15); }
-      50% { box-shadow: 0 0 18px rgba(255,255,255,0.35); }
+      0%, 100% { box-shadow: 0 0 8px rgba(255, 255, 255, 0.15); }
+      50% { box-shadow: 0 0 18px rgba(255, 255, 255, 0.35); }
     }
 
     /* ── Match Card ── */
@@ -1471,7 +1058,7 @@
       backdrop-filter: blur(20px) saturate(150%);
       border: 1px solid var(--border);
       border-radius: var(--radius);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.04);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.04);
       transition: 0.3s;
       margin-bottom: 12px;
     }
@@ -1542,41 +1129,19 @@
       letter-spacing: 0.05em;
     }
     .platform-faceit {
-      background: rgba(255,80,0,0.15);
+      background: rgba(255, 80, 0, 0.15);
       color: #ff5000;
-      border: 1px solid rgba(255,80,0,0.3);
+      border: 1px solid rgba(255, 80, 0, 0.3);
     }
     .platform-xplay {
-      background: rgba(0,200,255,0.15);
+      background: rgba(0, 200, 255, 0.15);
       color: #00c8ff;
-      border: 1px solid rgba(0,200,255,0.3);
+      border: 1px solid rgba(0, 200, 255, 0.3);
     }
     .platform-cybershoke {
-      background: rgba(160,100,255,0.15);
+      background: rgba(160, 100, 255, 0.15);
       color: #a064ff;
-      border: 1px solid rgba(160,100,255,0.3);
-    }
-
-    body.light .platform-faceit,
-    body.green .platform-faceit,
-    body.japan .platform-faceit {
-      background: rgba(255,80,0,0.1);
-      color: #cc4000;
-      border: 1px solid rgba(255,80,0,0.25);
-    }
-    body.light .platform-xplay,
-    body.green .platform-xplay,
-    body.japan .platform-xplay {
-      background: rgba(0,180,220,0.1);
-      color: #0099bb;
-      border: 1px solid rgba(0,180,220,0.25);
-    }
-    body.light .platform-cybershoke,
-    body.green .platform-cybershoke,
-    body.japan .platform-cybershoke {
-      background: rgba(140,80,220,0.1);
-      color: #7a40cc;
-      border: 1px solid rgba(140,80,220,0.25);
+      border: 1px solid rgba(160, 100, 255, 0.3);
     }
 
     .player-stat-row {
@@ -1635,7 +1200,7 @@
       backdrop-filter: blur(var(--blur)) saturate(170%);
       border: 1px solid var(--border-light);
       border-radius: var(--radius);
-      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.07);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255, 255, 255, 0.07);
       animation: fadeUp 0.35s ease;
       transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
@@ -1711,7 +1276,7 @@
       border-radius: var(--radius-sm);
       cursor: pointer;
       transition: 0.3s;
-      background: rgba(255,255,255,0.03);
+      background: rgba(255, 255, 255, 0.03);
       border: 1px solid var(--border);
       backdrop-filter: blur(8px);
       display: flex;
@@ -1720,7 +1285,7 @@
     }
     .settings-option:hover {
       border-color: var(--border-light);
-      background: rgba(255,255,255,0.06);
+      background: rgba(255, 255, 255, 0.06);
     }
     .settings-option.active {
       border-color: var(--accent);
@@ -1755,19 +1320,19 @@
     }
     .theme-preview-dark {
       background: #1a1a2e;
-      border: 2px solid rgba(255,255,255,0.15);
+      border: 2px solid rgba(255, 255, 255, 0.15);
     }
     .theme-preview-light {
       background: #f0f4f8;
-      border: 2px solid rgba(0,0,0,0.1);
+      border: 2px solid rgba(0, 0, 0, 0.1);
     }
     .theme-preview-green {
       background: #e8f5e9;
-      border: 2px solid rgba(0,0,0,0.1);
+      border: 2px solid rgba(0, 0, 0, 0.1);
     }
     .theme-preview-japan {
       background: #1a0a0a;
-      border: 2px solid rgba(200,50,50,0.4);
+      border: 2px solid rgba(200, 50, 50, 0.4);
     }
 
     /* ── Toast ── */
@@ -1775,7 +1340,7 @@
       position: fixed; bottom: 22px; left: 50%;
       transform: translateX(-50%) translateY(70px);
       padding: 11px 22px;
-      background: rgba(255,255,255,0.08);
+      background: rgba(20, 20, 30, 0.95);
       backdrop-filter: blur(20px);
       border: 1px solid var(--border-light);
       border-radius: var(--radius-sm);
@@ -1801,6 +1366,7 @@
 
 <div class="orb orb-1"></div>
 <div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
 
 <div class="app-layout">
   <aside class="transfer-sidebar" id="transfer-sidebar">
@@ -1930,7 +1496,9 @@
           <div id="bp-list"></div>
         </div>
 
-        <div id="p-team" class="page"><div id="team-list"></div></div>
+        <div id="p-team" class="page">
+          <div id="team-list"></div>
+        </div>
 
         <!-- FRIENDS -->
         <div id="p-friends" class="page">
@@ -2036,14 +1604,14 @@
             <div class="theme-preview-dark"></div>
             <span class="settings-label">Dark</span>
           </div>
-          <span class="settings-desc">Default dark theme</span>
+          <span class="settings-desc">Liquid glass dark</span>
         </div>
         <div class="settings-option" data-theme="light" id="opt-light">
           <div class="theme-preview">
             <div class="theme-preview-light"></div>
             <span class="settings-label">Light</span>
           </div>
-          <span class="settings-desc">Blue-white gradient</span>
+          <span class="settings-desc">Light blue gradient</span>
         </div>
         <div class="settings-option" data-theme="green" id="opt-green">
           <div class="theme-preview">
@@ -2228,6 +1796,21 @@ function platformClass(p) {
 function platformName(p) {
   const map = { faceit:'Faceit', xplay:'XPlay', cybershoke:'CyberShoke' };
   return map[p] || p;
+}
+
+/* ═══════════════════════════════════════════
+  SOUND NOTIFICATIONS
+  ═══════════════════════════════════════════ */
+let notifSound = null;
+function initSound() {
+  notifSound = new Audio('https://assets.mixkit.co/active_storage/sfx/2354/2354-preview.mp3');
+  notifSound.volume = 0.3;
+}
+function playNotifSound() {
+  if (notifSound) {
+    notifSound.currentTime = 0;
+    notifSound.play().catch(() => {});
+  }
 }
 
 /* ═══════════════════════════════════════════
@@ -2474,6 +2057,7 @@ function listenFriends() {
         if (change.type === 'added') {
           const data = change.doc.data();
           showFriendToast(data.from, data.fromUid, change.doc.id);
+          playNotifSound();
         }
       });
     }, err => console.error('Friends listener:', err));
@@ -2616,6 +2200,58 @@ async function renderFriends() {
     console.error(e);
     el.innerHTML = '<div class="empty"><p>Error loading friends.</p></div>';
   }
+}
+
+/* ═══════════════════════════════════════════
+  TEAM MANAGEMENT
+  ═══════════════════════════════════════════ */
+const ROLES = ['Captain', 'AWPer', 'Rifler', 'Support', 'IGL'];
+
+async function updateMemberRole(memberUid, newRole) {
+  if (!me || !myTeamId) return;
+  const isCaptain = teamMembers.find(m => m.uid === me.uid && m.role === 'Captain');
+  if (!isCaptain && !me.isAdmin) return toast('Only Captain can change roles.');
+
+  try {
+    await db.collection('teamMembers').doc(`${myTeamId}_${memberUid}`).update({ role: newRole });
+    toast('Role updated!');
+  } catch(e) {
+    console.error(e);
+    toast('Error updating role.');
+  }
+}
+
+function renderTeam() {
+  const el = $('team-list');
+  if (!myTeamId || !teamMembers.length) {
+    el.innerHTML = '<div class="empty"><p>You are not in a team yet.<br>Wait for an invite in Notifs.</p></div>';
+    return;
+  }
+
+  const isCaptain = teamMembers.find(m => m.uid === me.uid && m.role === 'Captain');
+
+  el.innerHTML = `
+    <div class="team-header">
+      <h3>${esc(teamName || 'My Team')}</h3>
+      <p>${teamMembers.length} member${teamMembers.length !== 1 ? 's' : ''}</p>
+    </div>
+    ${teamMembers.map(m => `
+      <div class="row">
+        <div class="ava" style="background:${avaColor(m.nick)};cursor:pointer;" onclick="openProfile('${m.uid}')">${m.nick[0].toUpperCase()}</div>
+        <div class="row-info">
+          <div class="n" style="cursor:pointer;" onclick="openProfile('${m.uid}')" class="transfer-player">${esc(m.nick)}</div>
+          <div class="r">${esc(m.role || 'Member')}</div>
+        </div>
+        ${isCaptain && m.uid !== me.uid ? `
+          <select class="role-select role-${(m.role || 'member').toLowerCase()}" 
+                  onchange="updateMemberRole('${m.uid}', this.value)"
+                  style="min-width: 120px;">
+            ${ROLES.map(r => `<option value="${r}" ${m.role === r ? 'selected' : ''}>${r}</option>`).join('')}
+          </select>
+        ` : ''}
+        <span class="pill pill-on">In team</span>
+      </div>
+    `).join('')}`;
 }
 
 /* ═══════════════════════════════════════════
@@ -3084,28 +2720,6 @@ async function sendBc() {
 }
 
 /* ═══════════════════════════════════════════
-  TEAM & RATING
-  ═══════════════════════════════════════════ */
-function renderTeam() {
-  const el = $('team-list');
-  if (!myTeamId || !teamMembers.length) {
-    el.innerHTML = '<div class="empty"><p>You are not in a team yet.<br>Wait for an invite in Notifs.</p></div>';
-    return;
-  }
-  el.innerHTML = `
-    <div class="team-header">
-      <h3>${esc(teamName || 'My Team')}</h3>
-      <p>${teamMembers.length} member${teamMembers.length !== 1 ? 's' : ''}</p>
-    </div>
-    ${teamMembers.map(m => `
-      <div class="row">
-        <div class="ava" style="background:${avaColor(m.nick)};cursor:pointer;" onclick="openProfile('${m.uid}')">${m.nick[0].toUpperCase()}</div>
-        <div class="row-info"><div class="n" style="cursor:pointer;" onclick="openProfile('${m.uid}')" class="transfer-player">${esc(m.nick)}</div><div class="r">${esc(m.role || 'Member')}</div></div>
-        <span class="pill pill-on">In team</span>
-      </div>`).join('')}`;
-}
-
-/* ═══════════════════════════════════════════
   BAN-PICK
   ═══════════════════════════════════════════ */
 function getMapPool(format) {
@@ -3391,6 +3005,7 @@ async function pickMap(bpId) {
   INIT
   ═══════════════════════════════════════════ */
 initTheme();
+initSound();
 
 $('f-map').innerHTML = MAPS.map(m => `<option value="${m}">${m}</option>`).join('');
 
