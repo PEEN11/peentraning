@@ -76,6 +76,13 @@
       --badge-color: var(--white);
     }
 
+    /* Gradient animations for light & green themes */
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     body.light {
       --bg: #f0f4f8;
       --glass: rgba(255,255,255,0.75);
@@ -139,250 +146,13 @@
       --badge-border: none;
       --badge-color: #fff;
     }
-
+    body.light::before {
+      background: linear-gradient(-45deg, #e8f0fe, #d4e4f7, #c5d9f2, #dbeafe, #e8f0fe) !important;
+      background-size: 400% 400% !important;
+      animation: gradientShift 12s ease infinite;
+    }
     body.light .panel::after {
       background: linear-gradient(90deg, transparent, rgba(59,130,246,0.2), transparent);
-    }
-
-    body.light input,
-    body.light select,
-    body.light textarea {
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    body.light input::placeholder,
-    body.light textarea::placeholder {
-      color: #8899aa;
-    }
-
-    body.light input:focus,
-    body.light select:focus,
-    body.light textarea:focus {
-      border-color: var(--accent);
-      background: var(--input-focus-bg);
-      box-shadow: 0 0 0 3px var(--accent-light);
-    }
-
-    body.light select option {
-      background: #fff;
-      color: #1a1a2e;
-    }
-
-    body.light .btn {
-      color: var(--btn-color);
-      border: none;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-
-    body.light .btn-ghost {
-      background: transparent;
-      color: var(--btn-ghost-color);
-      border: 1px solid rgba(59,130,246,0.25);
-    }
-
-    body.light .btn-ghost:hover {
-      background: rgba(59,130,246,0.08);
-      color: var(--btn-ghost-hover-color);
-      border-color: rgba(59,130,246,0.4);
-    }
-
-    body.light .btn-outline {
-      background: transparent;
-      color: var(--btn-outline-color);
-      border: 1px solid rgba(59,130,246,0.3);
-    }
-
-    body.light .btn-outline:hover {
-      background: var(--btn-outline-hover-bg);
-      color: var(--btn-outline-hover-color);
-      border-color: rgba(59,130,246,0.5);
-    }
-
-    body.light .btn-danger {
-      color: var(--btn-danger-color);
-      background: rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.light .btn-danger:hover {
-      color: var(--btn-danger-hover-color);
-      background: var(--btn-danger-hover-bg);
-      border-color: rgba(0,0,0,0.18);
-    }
-
-    body.light .badge {
-      color: var(--badge-color);
-      background: var(--badge-bg);
-      border: var(--badge-border);
-    }
-
-    body.light .dot {
-      background: #3b82f6;
-      box-shadow: 0 0 8px rgba(59,130,246,0.5);
-    }
-
-    body.light .logout {
-      color: #5a6a7e;
-    }
-
-    body.light .logout:hover {
-      color: #0d2b4e;
-    }
-
-    body.light .rank-1 {
-      color: var(--rank1-color);
-      border-color: rgba(59,130,246,0.4);
-      box-shadow: 0 0 14px rgba(59,130,246,0.15);
-    }
-
-    body.light .notif {
-      border-left: 2px solid var(--notif-border-left);
-    }
-
-    body.light .notif.bc {
-      border-left-color: #3b82f6;
-    }
-
-    body.light .notif.invite {
-      border-left-color: rgba(59,130,246,0.6);
-    }
-
-    body.light .x {
-      color: #5a6a7e;
-    }
-
-    body.light .x:hover {
-      color: #0d2b4e;
-    }
-
-    body.light .link a {
-      color: #3b82f6;
-      border-bottom: 1px solid rgba(59,130,246,0.3);
-    }
-
-    body.light .link a:hover {
-      color: #2563eb;
-      border-bottom-color: rgba(59,130,246,0.6);
-    }
-
-    body.light .card:hover {
-      border-color: rgba(59,130,246,0.2);
-    }
-
-    body.light .tag {
-      background: var(--tag-bg);
-      color: var(--tag-color);
-      border-color: rgba(59,130,246,0.2);
-    }
-
-    body.light .pill-on {
-      background: var(--pill-on-bg);
-      color: #2563eb;
-      border-color: rgba(59,130,246,0.25);
-    }
-
-    body.light .pill-off {
-      background: var(--pill-off-bg);
-      color: var(--pill-off-color);
-    }
-
-    body.light .score {
-      color: var(--score-color);
-    }
-
-    body.light .invite-box {
-      background: rgba(59,130,246,0.04);
-      border-color: rgba(59,130,246,0.2);
-    }
-
-    body.light .invite-box h4 {
-      color: #0d2b4e;
-    }
-
-    body.light .team-header {
-      background: var(--team-header-bg);
-    }
-
-    body.light .team-header h3 {
-      color: #0d2b4e;
-    }
-
-    body.light .admin-bar {
-      background: rgba(59,130,246,0.06);
-      border-color: rgba(59,130,246,0.2);
-    }
-
-    body.light .admin-bar span {
-      color: #2563eb;
-    }
-
-    body.light .sub.admin {
-      color: #2563eb;
-    }
-
-    body.light .toast {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid rgba(59,130,246,0.2);
-      color: #1a1a2e;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    }
-
-    body.light .radios input {
-      accent-color: #3b82f6;
-    }
-
-    body.light .settings-option {
-      background: rgba(0,0,0,0.02);
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-
-    body.light .settings-option:hover {
-      border-color: rgba(59,130,246,0.25);
-      background: rgba(59,130,246,0.04);
-    }
-
-    body.light .settings-option.active {
-      border-color: #3b82f6;
-      background: rgba(59,130,246,0.08);
-      box-shadow: 0 0 0 3px rgba(59,130,246,0.1);
-    }
-
-    body.light .theme-preview-dark {
-      background: #1a1a2e;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    body.light .theme-preview-light {
-      background: #f0f4f8;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.light .theme-preview-green {
-      background: #e8f5e9;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.light .theme-preview-japan {
-      background: #1a0a0a;
-      border: 1px solid rgba(200,50,50,0.3);
-    }
-
-    body.light .settings-label {
-      color: #0d2b4e;
-    }
-
-    body.light .settings-desc {
-      color: #5a6a7e;
-    }
-
-    body.light::before {
-      background:
-        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(59,130,246,0.08), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 90%, rgba(59,130,246,0.06), transparent 55%),
-        linear-gradient(180deg, #e8f0fe, #f0f4f8);
     }
 
     body.green {
@@ -448,250 +218,13 @@
       --badge-border: none;
       --badge-color: #fff;
     }
-
+    body.green::before {
+      background: linear-gradient(-45deg, #e8f5e9, #c8e6c9, #a5d6a7, #c8e6c9, #e8f5e9) !important;
+      background-size: 400% 400% !important;
+      animation: gradientShift 12s ease infinite;
+    }
     body.green .panel::after {
       background: linear-gradient(90deg, transparent, rgba(34,197,94,0.2), transparent);
-    }
-
-    body.green input,
-    body.green select,
-    body.green textarea {
-      background: var(--input-bg);
-      border: 1px solid var(--border);
-      color: var(--text);
-    }
-
-    body.green input::placeholder,
-    body.green textarea::placeholder {
-      color: #88aa88;
-    }
-
-    body.green input:focus,
-    body.green select:focus,
-    body.green textarea:focus {
-      border-color: var(--accent);
-      background: var(--input-focus-bg);
-      box-shadow: 0 0 0 3px var(--accent-light);
-    }
-
-    body.green select option {
-      background: #fff;
-      color: #1a2e1a;
-    }
-
-    body.green .btn {
-      color: var(--btn-color);
-      border: none;
-      font-weight: 600;
-      letter-spacing: 0.01em;
-    }
-
-    body.green .btn-ghost {
-      background: transparent;
-      color: var(--btn-ghost-color);
-      border: 1px solid rgba(34,197,94,0.25);
-    }
-
-    body.green .btn-ghost:hover {
-      background: rgba(34,197,94,0.08);
-      color: var(--btn-ghost-hover-color);
-      border-color: rgba(34,197,94,0.4);
-    }
-
-    body.green .btn-outline {
-      background: transparent;
-      color: var(--btn-outline-color);
-      border: 1px solid rgba(34,197,94,0.3);
-    }
-
-    body.green .btn-outline:hover {
-      background: var(--btn-outline-hover-bg);
-      color: var(--btn-outline-hover-color);
-      border-color: rgba(34,197,94,0.5);
-    }
-
-    body.green .btn-danger {
-      color: var(--btn-danger-color);
-      background: rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.green .btn-danger:hover {
-      color: var(--btn-danger-hover-color);
-      background: var(--btn-danger-hover-bg);
-      border-color: rgba(0,0,0,0.18);
-    }
-
-    body.green .badge {
-      color: var(--badge-color);
-      background: var(--badge-bg);
-      border: var(--badge-border);
-    }
-
-    body.green .dot {
-      background: #22c55e;
-      box-shadow: 0 0 8px rgba(34,197,94,0.5);
-    }
-
-    body.green .logout {
-      color: #5a7e5a;
-    }
-
-    body.green .logout:hover {
-      color: #0d4e0d;
-    }
-
-    body.green .rank-1 {
-      color: var(--rank1-color);
-      border-color: rgba(34,197,94,0.4);
-      box-shadow: 0 0 14px rgba(34,197,94,0.15);
-    }
-
-    body.green .notif {
-      border-left: 2px solid var(--notif-border-left);
-    }
-
-    body.green .notif.bc {
-      border-left-color: #22c55e;
-    }
-
-    body.green .notif.invite {
-      border-left-color: rgba(34,197,94,0.6);
-    }
-
-    body.green .x {
-      color: #5a7e5a;
-    }
-
-    body.green .x:hover {
-      color: #0d4e0d;
-    }
-
-    body.green .link a {
-      color: #22c55e;
-      border-bottom: 1px solid rgba(34,197,94,0.3);
-    }
-
-    body.green .link a:hover {
-      color: #16a34a;
-      border-bottom-color: rgba(34,197,94,0.6);
-    }
-
-    body.green .card:hover {
-      border-color: rgba(34,197,94,0.2);
-    }
-
-    body.green .tag {
-      background: var(--tag-bg);
-      color: var(--tag-color);
-      border-color: rgba(34,197,94,0.2);
-    }
-
-    body.green .pill-on {
-      background: var(--pill-on-bg);
-      color: #16a34a;
-      border-color: rgba(34,197,94,0.25);
-    }
-
-    body.green .pill-off {
-      background: var(--pill-off-bg);
-      color: var(--pill-off-color);
-    }
-
-    body.green .score {
-      color: var(--score-color);
-    }
-
-    body.green .invite-box {
-      background: rgba(34,197,94,0.04);
-      border-color: rgba(34,197,94,0.2);
-    }
-
-    body.green .invite-box h4 {
-      color: #0d4e0d;
-    }
-
-    body.green .team-header {
-      background: var(--team-header-bg);
-    }
-
-    body.green .team-header h3 {
-      color: #0d4e0d;
-    }
-
-    body.green .admin-bar {
-      background: rgba(34,197,94,0.06);
-      border-color: rgba(34,197,94,0.2);
-    }
-
-    body.green .admin-bar span {
-      color: #16a34a;
-    }
-
-    body.green .sub.admin {
-      color: #16a34a;
-    }
-
-    body.green .toast {
-      background: rgba(255,255,255,0.95);
-      border: 1px solid rgba(34,197,94,0.2);
-      color: #1a2e1a;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-    }
-
-    body.green .radios input {
-      accent-color: #22c55e;
-    }
-
-    body.green .settings-option {
-      background: rgba(0,0,0,0.02);
-      border: 1px solid rgba(0,0,0,0.08);
-    }
-
-    body.green .settings-option:hover {
-      border-color: rgba(34,197,94,0.25);
-      background: rgba(34,197,94,0.04);
-    }
-
-    body.green .settings-option.active {
-      border-color: #22c55e;
-      background: rgba(34,197,94,0.08);
-      box-shadow: 0 0 0 3px rgba(34,197,94,0.1);
-    }
-
-    body.green .theme-preview-dark {
-      background: #1a1a2e;
-      border: 1px solid rgba(255,255,255,0.1);
-    }
-
-    body.green .theme-preview-light {
-      background: #f0f4f8;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.green .theme-preview-green {
-      background: #e8f5e9;
-      border: 1px solid rgba(0,0,0,0.1);
-    }
-
-    body.green .theme-preview-japan {
-      background: #1a0a0a;
-      border: 1px solid rgba(200,50,50,0.3);
-    }
-
-    body.green .settings-label {
-      color: #0d4e0d;
-    }
-
-    body.green .settings-desc {
-      color: #5a7e5a;
-    }
-
-    body.green::before {
-      background:
-        radial-gradient(ellipse 70% 50% at 15% 0%, rgba(34,197,94,0.08), transparent 60%),
-        radial-gradient(ellipse 50% 40% at 90% 90%, rgba(34,197,94,0.06), transparent 55%),
-        linear-gradient(180deg, #e8f5e9, #f0f7f4);
     }
 
     body.japan {
@@ -1286,7 +819,7 @@
       transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
     }
     .top .logo { font-size: 1.3rem; text-align: left; }
-    .user { display: flex; align-items: center; gap: 8px; font-size: 0.88rem; }
+    .user { display: flex; align-items: center; gap: 10px; font-size: 0.88rem; margin-left: auto; }
     .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--white); box-shadow: 0 0 8px rgba(255,255,255,0.5); transition: background 0.4s ease; }
     .badge {
       font-size: 0.6rem; font-weight: 700; padding: 2px 7px;
@@ -1318,6 +851,26 @@
       transform: rotate(30deg);
     }
 
+    .header-avatar {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.9rem;
+      color: #111;
+      border: 1px solid var(--border-light);
+      flex-shrink: 0;
+      cursor: pointer;
+      transition: 0.25s;
+      user-select: none;
+    }
+    .header-avatar:hover {
+      transform: scale(1.05);
+      border-color: var(--accent);
+    }
     .profile-btn {
       background: none;
       border: none;
@@ -1445,18 +998,53 @@
     .rank-3 { background: var(--rank3-bg); color: var(--rank3-color); }
     .score { font-weight: 700; color: var(--score-color); transition: color 0.4s ease; }
 
-    /* ── Profile ── */
-    .profile-header {
+    /* ── Fullscreen Profile ── */
+    .profile-full {
+      position: fixed;
+      inset: 0;
+      z-index: 950;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      background: var(--overlay-bg);
+      backdrop-filter: blur(14px);
+      transition: background 0.4s ease;
+    }
+    .profile-full.on {
+      display: flex;
+      animation: fadeUp 0.3s ease;
+    }
+    .profile-full-content {
+      width: 100%;
+      max-width: 560px;
+      max-height: 90vh;
+      overflow-y: auto;
+      padding: 32px 28px;
+      background: var(--modal-bg);
+      backdrop-filter: blur(var(--blur)) saturate(170%);
+      border: 1px solid var(--border-light);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow), inset 0 1px 0 rgba(255,255,255,0.07);
+      animation: fadeUp 0.35s ease;
+      transition: background 0.4s ease, border-color 0.4s ease;
+    }
+    .profile-full-head {
       display: flex;
       align-items: center;
-      gap: 20px;
+      justify-content: space-between;
       margin-bottom: 24px;
-      flex-wrap: wrap;
     }
-    .profile-ava {
+    .profile-full-head h2 {
+      font-size: 1.2rem;
+      color: var(--white);
+      transition: color 0.4s ease;
+    }
+
+    .profile-ava-sq {
       width: 80px;
       height: 80px;
-      border-radius: 50%;
+      border-radius: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1465,35 +1053,70 @@
       color: #111;
       border: 2px solid var(--border-light);
       flex-shrink: 0;
+      transition: 0.25s;
+      user-select: none;
     }
-    .profile-info h2 {
+
+    .profile-full-body {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+    .profile-full-body .info h2 {
       font-size: 1.4rem;
       color: var(--white);
       margin-bottom: 4px;
     }
-    .profile-info .profile-role {
+    .profile-full-body .info .role {
       font-size: 0.85rem;
       color: var(--accent);
       font-weight: 600;
     }
-    .profile-info .profile-team {
+    .profile-full-body .info .team {
       font-size: 0.85rem;
       color: var(--muted);
       margin-top: 2px;
     }
-    .profile-info .profile-date {
+    .profile-full-body .info .date {
       font-size: 0.78rem;
       color: var(--muted);
       margin-top: 2px;
     }
-    .profile-section {
-      margin-bottom: 20px;
+
+    .about-section {
+      margin-bottom: 16px;
+    }
+    .about-section h4 {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted);
+      margin-bottom: 10px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--border);
+    }
+    .about-text {
+      font-size: 0.9rem;
+      color: var(--text);
+      line-height: 1.6;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+    .about-text.empty {
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    .profile-full-section {
+      margin-bottom: 16px;
       padding: 16px;
       background: var(--glass);
       border: 1px solid var(--border);
       border-radius: var(--radius-sm);
     }
-    .profile-section h4 {
+    .profile-full-section h4 {
       font-size: 0.72rem;
       text-transform: uppercase;
       letter-spacing: 0.1em;
@@ -1545,6 +1168,43 @@
     .social-icon.tg { background: #26a5e4; color: #fff; }
     .social-icon.steam { background: #1b2838; color: #fff; }
 
+    /* ── Friends Toast ── */
+    .friend-toast {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      pointer-events: none;
+    }
+    .friend-toast-item {
+      pointer-events: auto;
+      background: rgba(18,18,18,0.95);
+      backdrop-filter: blur(20px);
+      border: 1px solid var(--border-light);
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius-sm);
+      padding: 14px 18px;
+      box-shadow: var(--shadow);
+      animation: notifFadeIn 0.5s ease forwards;
+      max-width: 320px;
+    }
+    .friend-toast-item .ft-text {
+      font-size: 0.88rem;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .friend-toast-item .ft-actions {
+      display: flex;
+      gap: 8px;
+    }
+    .friend-toast-item .ft-actions .btn {
+      font-size: 0.78rem;
+      padding: 5px 10px;
+    }
+
     /* ── Notifications ── */
     .invite-box {
       padding: 18px; margin-bottom: 16px;
@@ -1571,6 +1231,10 @@
       0% { opacity: 0; transform: translateY(-12px) scale(0.97); max-height: 0; padding: 0 15px; margin-bottom: 0; }
       60% { opacity: 1; transform: translateY(3px) scale(1.01); }
       100% { opacity: 1; transform: translateY(0) scale(1); max-height: 200px; padding: 13px 15px; margin-bottom: 7px; }
+    }
+    @keyframes notifFadeOut {
+      0% { opacity: 1; transform: translateY(0) scale(1); }
+      100% { opacity: 0; transform: translateY(-20px) scale(0.95); }
     }
     .notif.new {
       border-left-color: var(--accent) !important;
@@ -1641,6 +1305,53 @@
     .team-header h3 { font-size: 1rem; color: var(--white); margin-bottom: 2px; transition: color 0.4s ease; }
     .team-header p { font-size: 0.78rem; color: var(--muted); transition: color 0.4s ease; }
     .invite-box .flex-col { display: flex; flex-direction: column; gap: 8px; }
+
+    /* ── Friends ── */
+    .friend-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 15px;
+      margin-bottom: 8px;
+      background: var(--glass);
+      backdrop-filter: blur(16px);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: 0.25s;
+    }
+    .friend-row:hover {
+      border-color: var(--border-light);
+      background: var(--glass-hover);
+    }
+    .friend-row .friend-name {
+      flex: 1;
+      font-weight: 600;
+      font-size: 0.93rem;
+      color: var(--white);
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .friend-row .friend-name:hover {
+      color: var(--accent);
+    }
+    .friend-row .friend-status {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .friend-row .friend-remove {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      color: var(--btn-danger-color);
+      cursor: pointer;
+      padding: 4px 10px;
+      font-size: 0.75rem;
+      transition: 0.2s;
+    }
+    .friend-row .friend-remove:hover {
+      color: var(--btn-danger-hover-color);
+      background: var(--btn-danger-hover-bg);
+    }
 
     /* ── Ban-Pick ── */
     .bp-card {
@@ -2092,7 +1803,6 @@
 <div class="orb orb-2"></div>
 
 <div class="app-layout">
-  <!-- Трансферное окно -->
   <aside class="transfer-sidebar" id="transfer-sidebar">
     <h3>Transfer Window</h3>
     <div id="transfer-list">
@@ -2156,6 +1866,7 @@
           <div class="logo"><span class="p">P</span><span class="one">1</span><span class="en">EN HUB</span></div>
           <div class="user">
             <span class="dot"></span>
+            <div class="header-avatar" id="header-avatar" title="My Profile" style="cursor:pointer;"></div>
             <button class="profile-btn" id="b-my-profile" title="My Profile">
               <span id="u-name"></span>
             </button>
@@ -2180,7 +1891,7 @@
           <button class="tab" data-p="notifs">Notifs<span class="notif-badge" id="notif-badge">0</span></button>
           <button class="tab" data-p="bp">Ban-Pick</button>
           <button class="tab" data-p="team">Team</button>
-          <button class="tab" data-p="rating">Rating</button>
+          <button class="tab" data-p="friends">Friends</button>
         </nav>
 
         <div id="p-trainings" class="page on">
@@ -2220,19 +1931,32 @@
         </div>
 
         <div id="p-team" class="page"><div id="team-list"></div></div>
-        <div id="p-rating" class="page"><div id="rating-list"></div></div>
+
+        <!-- FRIENDS -->
+        <div id="p-friends" class="page">
+          <div class="bar">
+            <input id="i-add-friend" placeholder="Enter nickname to add..." style="flex:1;min-width:140px;">
+            <button class="btn btn-sm" id="b-add-friend">Add Friend</button>
+          </div>
+          <div id="friend-list"></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PROFILE MODAL -->
-<div id="m-profile" class="overlay">
-  <div class="modal" onclick="event.stopPropagation()" style="max-width:550px;">
-    <div class="modal-head"><h2 id="profile-title">Profile</h2><button class="x" data-x="m-profile">&times;</button></div>
+<!-- FULLSCREEN PROFILE -->
+<div id="profile-full" class="profile-full" onclick="closeProfileFull()">
+  <div class="profile-full-content" onclick="event.stopPropagation()">
+    <div class="profile-full-head">
+      <h2 id="profile-title">Profile</h2>
+      <button class="x" id="btn-close-profile">&times;</button>
+    </div>
     <div id="profile-body"></div>
   </div>
 </div>
+
+<div id="friend-toast-container" class="friend-toast"></div>
 
 <!-- EDIT SOCIALS MODAL -->
 <div id="m-edit-socials" class="overlay">
@@ -2445,7 +2169,7 @@ const AVA = ['#fff','#d4d4d4','#a3a3a3','#737373','#525252','#e5e5e5','#fafafa']
 
 let auth, db, me = null, trains = [], curId = null;
 let myTeamId = null, teamMembers = [], teamName = '';
-let unTr, unNo, unBc, unTeam, unTransfers, unBp;
+let unTr, unNo, unBc, unTeam, unTransfers, unBp, unFriends;
 let curBpId = null;
 
 const teamSlug = name => name.toLowerCase().replace(/[^a-z0-9]/g, '_').replace(/_+/g, '_').slice(0, 48) || 'team';
@@ -2653,6 +2377,7 @@ async function doLogout() {
 function enterMain() {
   screen('s-main');
   $('u-name').textContent = me.nick;
+  updateHeaderAvatar();
   $('u-badge').style.display = me.isAdmin ? 'inline' : 'none';
   $('admin-bar').classList.toggle('on', me.isAdmin);
   $('invite-wrap').style.display = me.isAdmin ? 'block' : 'none';
@@ -2663,13 +2388,13 @@ function enterMain() {
   listenTeam();
   listenTransfers();
   listenBp();
-  renderRating();
+  listenFriends();
   tab('trainings');
 }
 
 function unsubAll() {
-  [unTr, unNo, unBc, unTeam, unTransfers, unBp].forEach(u => u && u());
-  unTr = unNo = unBc = unTeam = unTransfers = unBp = null;
+  [unTr, unNo, unBc, unTeam, unTransfers, unBp, unFriends].forEach(u => u && u());
+  unTr = unNo = unBc = unTeam = unTransfers = unBp = unFriends = null;
 }
 
 function listen() {
@@ -2736,8 +2461,179 @@ async function getOrCreateTeam(name) {
 }
 
 /* ═══════════════════════════════════════════
+  FRIENDS SYSTEM
+  ═══════════════════════════════════════════ */
+function listenFriends() {
+  if (unFriends) unFriends();
+  if (!me) return;
+  unFriends = db.collection('friendRequests')
+    .where('targetUid', '==', me.uid)
+    .where('status', '==', 'pending')
+    .onSnapshot(snapshot => {
+      snapshot.docChanges().forEach(change => {
+        if (change.type === 'added') {
+          const data = change.doc.data();
+          showFriendToast(data.from, data.fromUid, change.doc.id);
+        }
+      });
+    }, err => console.error('Friends listener:', err));
+}
+
+function showFriendToast(fromNick, fromUid, reqId) {
+  const container = $('friend-toast-container');
+  const item = document.createElement('div');
+  item.className = 'friend-toast-item';
+  item.innerHTML = `
+    <div class="ft-text"><strong>${esc(fromNick)}</strong> wants to be friends!</div>
+    <div class="ft-actions">
+      <button class="btn btn-sm" onclick="acceptFriend('${reqId}','${fromUid}','${esc(fromNick)}',this)">Accept</button>
+      <button class="btn btn-sm btn-ghost" onclick="declineFriend('${reqId}',this)">Decline</button>
+    </div>`;
+  container.appendChild(item);
+
+  // Auto-remove after 10 seconds
+  setTimeout(() => {
+    if (item.parentNode) {
+      item.style.animation = 'notifFadeOut 0.4s ease forwards';
+      setTimeout(() => item.remove(), 400);
+    }
+  }, 10000);
+}
+
+async function acceptFriend(reqId, fromUid, fromNick, btn) {
+  try {
+    await db.collection('friendRequests').doc(reqId).update({ status: 'accepted' });
+    // Add to both users' friends lists
+    await db.collection('friends').doc(`${me.uid}_${fromUid}`).set({
+      user1: me.uid, user2: fromUid,
+      nick1: me.nick, nick2: fromNick,
+      since: Date.now()
+    });
+    await db.collection('friends').doc(`${fromUid}_${me.uid}`).set({
+      user1: fromUid, user2: me.uid,
+      nick1: fromNick, nick2: me.nick,
+      since: Date.now()
+    });
+    const item = btn.closest('.friend-toast-item');
+    if (item) item.remove();
+    toast(`You are now friends with ${fromNick}!`);
+    renderFriends();
+  } catch(e) {
+    console.error(e);
+    toast('Error accepting friend.');
+  }
+}
+
+async function declineFriend(reqId, btn) {
+  try {
+    await db.collection('friendRequests').doc(reqId).update({ status: 'declined' });
+    const item = btn.closest('.friend-toast-item');
+    if (item) item.remove();
+    toast('Friend request declined.');
+  } catch(e) {
+    toast('Error.');
+  }
+}
+
+async function sendFriendRequest() {
+  const nick = $('i-add-friend').value.trim();
+  if (!nick) return toast('Enter a nickname.');
+  if (nick.toLowerCase() === me.nick.toLowerCase()) return toast('Cannot add yourself.');
+
+  try {
+    const nickDoc = await db.collection('nicknames').doc(nick.toLowerCase()).get();
+    if (!nickDoc.exists) return toast('User not found.');
+
+    const targetUid = nickDoc.data().uid;
+
+    // Check if already friends
+    const existing = await db.collection('friends').doc(`${me.uid}_${targetUid}`).get();
+    if (existing.exists) return toast('Already friends with this user.');
+
+    // Check if request already pending
+    const existingReq = await db.collection('friendRequests')
+      .where('fromUid', '==', me.uid)
+      .where('targetUid', '==', targetUid)
+      .where('status', '==', 'pending')
+      .get();
+    if (!existingReq.empty) return toast('Friend request already sent.');
+
+    await db.collection('friendRequests').add({
+      from: me.nick,
+      fromUid: me.uid,
+      targetUid: targetUid,
+      status: 'pending',
+      createdAt: Date.now()
+    });
+
+    $('i-add-friend').value = '';
+    toast(`Friend request sent to ${nick}!`);
+  } catch(e) {
+    console.error(e);
+    toast('Error sending friend request.');
+  }
+}
+
+async function removeFriend(uid) {
+  try {
+    await db.collection('friends').doc(`${me.uid}_${uid}`).delete();
+    await db.collection('friends').doc(`${uid}_${me.uid}`).delete();
+    toast('Friend removed.');
+    renderFriends();
+  } catch(e) {
+    toast('Error removing friend.');
+  }
+}
+
+async function renderFriends() {
+  const el = $('friend-list');
+  if (!me) return;
+
+  try {
+    const snapshot = await db.collection('friends')
+      .where('user1', '==', me.uid)
+      .orderBy('since', 'desc')
+      .get();
+
+    const friends = snapshot.docs.map(d => d.data());
+
+    if (!friends.length) {
+      el.innerHTML = '<div class="empty"><p>No friends yet.<br>Add friends by their nickname above!</p></div>';
+      return;
+    }
+
+    el.innerHTML = friends.map(f => {
+      const friendNick = f.nick2;
+      const friendUid = f.user2;
+      return `<div class="friend-row">
+        <div class="ava" style="background:${avaColor(friendNick)};cursor:pointer;" onclick="openProfile('${friendUid}')">${friendNick[0].toUpperCase()}</div>
+        <div class="friend-name" onclick="openProfile('${friendUid}')">${esc(friendNick)}</div>
+        <span class="friend-status">Friends</span>
+        <button class="friend-remove" onclick="removeFriend('${friendUid}')">Remove</button>
+      </div>`;
+    }).join('');
+  } catch(e) {
+    console.error(e);
+    el.innerHTML = '<div class="empty"><p>Error loading friends.</p></div>';
+  }
+}
+
+/* ═══════════════════════════════════════════
   PROFILE
   ═══════════════════════════════════════════ */
+function updateHeaderAvatar() {
+  const ava = $('header-avatar');
+  if (ava && me) {
+    ava.style.background = avaColor(me.nick);
+    ava.textContent = me.nick[0].toUpperCase();
+    ava.onclick = () => openProfile(me.uid);
+  }
+}
+
+function closeProfileFull() {
+  $('profile-full').classList.remove('on');
+}
+
 async function openProfile(uid) {
   if (!uid) return;
 
@@ -2781,6 +2677,7 @@ async function openProfile(uid) {
   $('profile-title').textContent = isOwn ? 'My Profile' : `${userData.nick}'s Profile`;
 
   const socials = userData.socials || {};
+  const aboutMe = userData.aboutMe || '';
   const memberSince = userData.createdAt
     ? new Date(userData.createdAt).toLocaleDateString('ru-RU', { day:'numeric', month:'long', year:'numeric' })
     : 'Unknown';
@@ -2799,21 +2696,30 @@ async function openProfile(uid) {
     socialsHTML = '<p style="color:var(--muted);font-size:0.85rem;">No social links added.</p>';
   }
 
+  const aboutHTML = `<div class="about-section">
+    <h4>About Me</h4>
+    <div class="about-text ${aboutMe ? '' : 'empty'}">${aboutMe ? esc(aboutMe) : 'No information added.'}</div>
+  </div>`;
+
   $('profile-body').innerHTML = `
-    <div class="profile-header">
-      <div class="profile-ava" style="background:${avaColor(userData.nick)}">${(userData.nick||'?')[0].toUpperCase()}</div>
-      <div class="profile-info">
+    <div class="profile-full-body">
+      <div class="profile-ava-sq" style="background:${avaColor(userData.nick)}">${(userData.nick||'?')[0].toUpperCase()}</div>
+      <div class="info">
         <h2>${esc(userData.nick)} ${userData.isAdmin ? '<span class="badge" style="display:inline;">ADMIN</span>' : ''}</h2>
-        ${userData.teamName ? `<div class="profile-role">${esc(userData.teamRole || 'Member')}</div>` : ''}
-        ${userData.teamName ? `<div class="profile-team">Team: ${esc(userData.teamName)}</div>` : '<div class="profile-team" style="color:var(--muted);">No team</div>'}
-        <div class="profile-date">Member since: ${memberSince}</div>
+        ${userData.teamName ? `<div class="role">${esc(userData.teamRole || 'Member')}</div>` : ''}
+        ${userData.teamName ? `<div class="team">Team: ${esc(userData.teamName)}</div>` : '<div class="team" style="color:var(--muted);">No team</div>'}
+        <div class="date">Member since: ${memberSince}</div>
       </div>
     </div>
-    <div class="profile-section">
+    ${aboutHTML}
+    <div class="profile-full-section">
       <h4>Social Links</h4>
       <div class="social-links">${socialsHTML}</div>
     </div>
-    ${isOwn ? `<button class="btn btn-sm" id="b-edit-socials" style="width:100%;">Edit Social Links</button>` : ''}
+    ${isOwn ? `
+      <button class="btn btn-sm" id="b-edit-socials" style="width:100%;margin-bottom:8px;">Edit Social Links</button>
+      <button class="btn btn-sm btn-ghost" id="b-edit-about" style="width:100%;">Edit About Me</button>
+    ` : ''}
   `;
 
   if (isOwn) {
@@ -2824,9 +2730,18 @@ async function openProfile(uid) {
       clrErr('e-socials');
       modal('m-edit-socials');
     };
+    $('b-edit-about').onclick = () => {
+      const text = prompt('Write something about yourself:', aboutMe || '');
+      if (text !== null) {
+        db.collection('users').doc(me.uid).update({ aboutMe: text }).then(() => {
+          toast('About me updated!');
+          openProfile(me.uid);
+        }).catch(() => toast('Save error.'));
+      }
+    };
   }
 
-  modal('m-profile');
+  $('profile-full').classList.add('on');
 }
 
 async function saveSocials() {
@@ -3043,7 +2958,6 @@ async function renderNotifs() {
 
     const items = [...broadcasts, ...invites, ...bpInvites].sort((a, b) => b.time - a.time);
 
-    // Count pending (unread) notifications for badge
     const pendingCount = items.filter(i => i.status === 'pending' || i.type === 'bc').length;
     const badge = $('notif-badge');
     if (badge) {
@@ -3189,16 +3103,6 @@ function renderTeam() {
         <div class="row-info"><div class="n" style="cursor:pointer;" onclick="openProfile('${m.uid}')" class="transfer-player">${esc(m.nick)}</div><div class="r">${esc(m.role || 'Member')}</div></div>
         <span class="pill pill-on">In team</span>
       </div>`).join('')}`;
-}
-
-function renderRating() {
-  $('rating-list').innerHTML = RATING.map((p,i) => `
-    <div class="row">
-      <div class="rank ${i<3?'rank-'+(i+1):''}">${i+1}</div>
-      <div class="ava" style="background:${avaColor(p.name)}">${p.name[0].toUpperCase()}</div>
-      <div class="row-info"><div class="n">${esc(p.name)}</div></div>
-      <div class="score">${p.score}</div>
-    </div>`).join('');
 }
 
 /* ═══════════════════════════════════════════
@@ -3501,6 +3405,13 @@ $('b-login-go').onclick = () => { clrErr('e-login'); screen('s-login'); };
 
 $('b-my-profile').onclick = () => { if(me) openProfile(me.uid); };
 $('b-save-socials').onclick = saveSocials;
+
+// Profile close button fix
+$('btn-close-profile').onclick = closeProfileFull;
+
+// Friends
+$('b-add-friend').onclick = sendFriendRequest;
+$('i-add-friend').onkeydown = e => { if (e.key === 'Enter') sendFriendRequest(); };
 
 document.querySelectorAll('.tab').forEach(t => t.onclick = () => tab(t.dataset.p));
 $('i-search').oninput = e => renderTrains(e.target.value);
